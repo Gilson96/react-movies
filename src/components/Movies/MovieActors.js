@@ -4,18 +4,23 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import { Avatar } from '@chakra-ui/react'
-import { CircularProgress } from '@chakra-ui/react'
+import { SkeletonCircle, Box } from '@chakra-ui/react'
 
-const MovieActors = ({ movieId, slidesPerView, modules, spaceBetween }) => {
-    const { data: movieActors = [], isLoading } = useGetMovieActorsQuery(parseInt(movieId))
+const MovieActors = ({ movieId, slidesPerView, modules, spaceBetween, type }) => {
+
+    const { data: movieActors = [], isLoading } = useGetMovieActorsQuery({id: parseInt(movieId), type: type})
 
     return (
         <>
             {isLoading ?
-                <CircularProgress
-                    isIndeterminate
-                    color='green.300'
-                />
+            // actors fallback
+                <Box padding='6' boxShadow='lg' className='w-full flex justify-start items-start gap-2'>
+                    <SkeletonCircle size='20' />
+                    <SkeletonCircle size='20' />
+                    <SkeletonCircle size='20' />
+                    <SkeletonCircle size='20' />
+                    <SkeletonCircle size='20' />
+                </Box>
                 :
                 movieActors.length !== 0 ?
                     <Swiper
@@ -31,14 +36,14 @@ const MovieActors = ({ movieId, slidesPerView, modules, spaceBetween }) => {
                                 <div className='flex flex-col justify-center items-center w-full'>
                                     <Avatar size='xl' name={actors.name} src={`https://image.tmdb.org/t/p/w342/${actors.profile_path}`} />
                                     <p className='text-xs text-white italic'>{actors.name}</p>
-                                    <p className='text-xs text-white italic text-center'>{actors.character}</p>
+                                    <p className='text-xs text-white italic text-center'>'{actors.character}'</p>
                                 </div>
                             </SwiperSlide>
                         ))}
 
                     </Swiper>
                     :
-                    <p className='font-bold'>Not Available</p>
+                    <p className='font-bold text-white'>Not Available</p>
             }
         </>
     )

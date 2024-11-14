@@ -19,8 +19,8 @@ const SearchedMovie = ({ onOpen, isOpen, onClose, children }) => {
             >
                 <ModalOverlay />
                 <ModalContent height={'100%'} width={'100%'}>
-                    <ModalCloseButton />
-                    <ModalBody className='w-full h-full bg-background rounded'>
+                    <ModalCloseButton color='white'/>
+                    <ModalBody className='w-full h-full bg-[#090E17] rounded'>
                         {children}
                     </ModalBody>
                 </ModalContent>

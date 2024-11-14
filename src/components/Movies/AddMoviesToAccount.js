@@ -1,20 +1,21 @@
 import { useState } from 'react'
 import { EyeIcon, HeartIcon } from '@heroicons/react/24/outline'
 import { Alert, AlertIcon } from '@chakra-ui/react'
+import useScreenSize from '../../features/useScreenSize'
 
 const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, addToRated, eyeIcon, heartIcon, starIcon, movieDetails, account }) => {
+    const screenSize = useScreenSize()
     const [watchlistFeedback, setWatchlistFeedback] = useState()
     const [favouriteFeedback, setFavouriteFeedback] = useState()
     const newMovieDetails = { id: Math.floor(Math.random() * 101), movieDetails }
 
     const handleIfMovieExistInWatchlist = () => {
-        return account.map(account => account.watchlistMovies.some(movie => movie.id === movieDetails.id))
+        return account.map(account => account.watchlistMovies.some((movie, index) => movie.id === account.watchlistMovies[index].id))
     }
 
     const handleIfMovieExistInFavourites = () => {
-        return account.map(account => account.favouriteMovies.some(movie => movie.id === movieDetails.id))
+        return account.map(account => account.favouriteMovies.some((movie, index) => movie.id === account.watchlistMovies[index].id))
     }
-
 
     return (
         <div>
@@ -36,7 +37,7 @@ const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, addToRated, eyeIco
                     </div>
                 }
                 <div
-                    className={`flex flex-col justify-center items-center ${!handleIfMovieExistInWatchlist()[0] ? 'cursor-pointer' : ''}`}
+                    className={` justify-center items-center ${!handleIfMovieExistInWatchlist()[0] ? 'cursor-pointer' : ''} ${screenSize.width < 700 ? 'flex flex-row w-[50%] border p-2 rounded-lg gap-1' : 'flex flex-col'}`}
                     onClick={() => {
                         return !handleIfMovieExistInWatchlist()[0] ?
                             <>
@@ -47,16 +48,17 @@ const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, addToRated, eyeIco
                             ''
                     }}
                 >
-                    {handleIfMovieExistInWatchlist()[0] ? <EyeIcon
-                        className='h-10 w-10 fill-green-400' /> : <EyeIcon
-                        className='h-10 w-10 text-green-400 hover:text-green-500 hover:fill-green-400'
-                    />}
+                    {handleIfMovieExistInWatchlist()[0] ?
+                        <EyeIcon className='h-10 w-10 fill-green-400' />
+                        :
+                        <EyeIcon className='h-10 w-10 text-green-400 hover:text-green-500 hover:fill-green-400' />
+                    }
 
                     <p className='text-white font-semibold'>{!handleIfMovieExistInWatchlist()[0] ? 'Watchlist' : 'Watchlisted'}</p>
                 </div>
 
                 <div
-                    className={`flex flex-col justify-center items-center ${!handleIfMovieExistInFavourites()[0] ? 'cursor-pointer' : ''}`}
+                    className={`justify-center items-center ${!handleIfMovieExistInFavourites()[0] ? 'cursor-pointer' : ''} ${screenSize.width < 700 ? 'flex flex-row w-[50%] border p-2 rounded-lg gap-1' : 'flex flex-col'}`}
                     onClick={() => {
                         return !handleIfMovieExistInFavourites()[0] ?
                             <>
