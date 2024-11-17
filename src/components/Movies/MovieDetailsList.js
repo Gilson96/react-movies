@@ -1,17 +1,6 @@
 import React from 'react'
-import { CalendarIcon, CurrencyPoundIcon, GlobeAltIcon, StarIcon, VideoCameraIcon } from '@heroicons/react/24/outline'
-import useScreenSize from '../../features/useScreenSize'
 
 const MovieDetailsList = ({ movieDetails, type }) => {
-    const screenSize = useScreenSize()
-
-    const handleYearOfWhichType = (movie) => {
-        if (type === 'movie') return movie.release_date.slice(0, 4)
-        if (type === 'tv') return movie.first_air_date.slice(0, 4)
-    }
-
-    console.log(movieDetails)
-
     return (
         <div className='w-full h-full flex justify-start gap-10 small-phone:justify-between'>
 

@@ -35,22 +35,22 @@ const Dashboard = () => {
       {screeenSize.width > 1000 ?
         <CategoriesNew type={type} slidesPerView={3.5} />
         :
-        <CategoriesNew type={type} slidesPerView={2} />
+        <CategoriesNew type={type} slidesPerView={1} />
       }
 
       {type === 'movie' &&
         < div className='mt-[1%] p-[3%]'>
           {screeenSize.width > 1000 ?
-            <MovieByList list={'upcoming'} type={type} slidesPerView={5} />
+            <MovieByList list={'upcoming'} type={type} slidesPerView={5} spaceBetween={10} />
             :
-            <MovieByList list={'upcoming'} type={type} slidesPerView={2} />
+            <MovieByList list={'upcoming'} type={type} slidesPerView={1} />
           }
         </div>
       }
       {type === 'tv' &&
         < div className='mt-[1%] p-[3%]'>
           {screeenSize.width > 1000 ?
-            <MovieByList list={'on_the_air'} type={type} slidesPerView={5} />
+            <MovieByList list={'on_the_air'} type={type} slidesPerView={5} spaceBetween={10} />
             :
             <MovieByList list={'on_the_air'} type={type} slidesPerView={2} />
           }
@@ -59,17 +59,17 @@ const Dashboard = () => {
 
       <div className='mt-[1%] p-[3%]'>
         {screeenSize.width > 1000 ?
-          <MovieByList list={'popular'} type={type} slidesPerView={5} />
+          <MovieByList list={'popular'} type={type} slidesPerView={5} spaceBetween={10} />
           :
-          <MovieByList list={'popular'} type={type} slidesPerView={2} />
+          <MovieByList list={'popular'} type={type} slidesPerView={1} />
         }
       </div>
 
       <div className='mt-[1%] p-[3%]'>
         {screeenSize.width > 1000 ?
-          <MovieByList list={'top_rated'} type={type} slidesPerView={5} />
+          <MovieByList list={'top_rated'} type={type} slidesPerView={5} spaceBetween={10} />
           :
-          <MovieByList list={'top_rated'} type={type} slidesPerView={2} />
+          <MovieByList list={'top_rated'} type={type} slidesPerView={1} />
         }
       </div>
 

@@ -11,8 +11,11 @@ import { Pagination, Navigation } from 'swiper/modules';
 import useScreenSize from '../../features/useScreenSize';
 
 const MovieByList = ({ slidesPerView, spaceBetween, list, type, handleGenre }) => {
+    const [mouseHover, setMouseHover] = useState(false)
     const { data: movieByList = [], isLoading } = useGetMovieByListQuery({ list: list, type: type })
     const screenSize = useScreenSize()
+
+
 
     return (
         <>
@@ -60,15 +63,17 @@ const MovieByList = ({ slidesPerView, spaceBetween, list, type, handleGenre }) =
                     // popular movies
                     movieByList.results.filter((movie, key) => movie.backdrop_path !== null).map((movie, index) => (
                         <>
-                            <SwiperSlide key={index} className='flex gap-2'>
+                            <SwiperSlide key={index} className=''>
                                 <Link to={`/movies/${movie.id}`} state={type}>
                                     <div
+                                        onMouseOver={() => setMouseHover(true)}
+                                        onMouseLeave={() => setMouseHover(false)}
                                         style={{
-                                            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url('https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}')`
+                                            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}')`
                                         }}
-                                        className='h-full w-full p-[3%] gap-1 rounded-lg bg-no-repeat bg-cover bg-center'
+                                        className='h-full w-full  gap-1 rounded-lg bg-no-repeat bg-cover bg-center'
                                     >
-                                        <div className='h-full w-full flex flex-col  items-start justify-end hover:bg-white/10 rounded-lg'>
+                                        <div className='h-full w-full flex flex-col items-start hover:bg-[rgb(0,0,0,0.5)] justify-end rounded-lg p-[3%]'>
                                             <p className='text-white font-bold'>{movie.title || movie.name}</p>
                                             <div className='flex gap-3'>
                                                 <div className='flex gap-1 items-center'>

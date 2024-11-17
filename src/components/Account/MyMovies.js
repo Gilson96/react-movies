@@ -114,6 +114,7 @@ const MyMovies = () => {
                                             title={screenSize.width < 700 ? '' : <p className='text-white'>{movie.movieDetails.title || movie.movieDetails.name}</p>}
                                             getId={movie.movieDetails.id}
                                             screenSize={screenSize}
+                                            type={movie.movieDetails.runtime ? 'movie' : 'tv'}
                                         />
                                         <TrashIcon
                                             className={`h-5 w-5 relative ${screenSize.width < 700 ? '-bottom-[1.5rem] right-[10%]' : '-bottom-[10%] right-[10%]'}  text-red-300 cursor-pointer`}
