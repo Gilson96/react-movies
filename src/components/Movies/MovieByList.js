@@ -69,7 +69,7 @@ const MovieByList = ({ slidesPerView, spaceBetween, list, type, handleGenre }) =
                                         onMouseOver={() => setMouseHover(true)}
                                         onMouseLeave={() => setMouseHover(false)}
                                         style={{
-                                            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}')`
+                                            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}')`
                                         }}
                                         className='h-full w-full  gap-1 rounded-lg bg-no-repeat bg-cover bg-center'
                                     >
