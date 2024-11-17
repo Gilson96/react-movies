@@ -8,14 +8,12 @@ import { useDisclosure } from '@chakra-ui/react'
 import Account from './Account/Account'
 import { SkeletonText, Box } from '@chakra-ui/react'
 import useScreenSize from '../features/useScreenSize'
-import { motion, useScroll, useSpring, useTransform } from "framer-motion"
 
-
-const Navigator = ({ setIsActive, isActive, scrollY }) => {
+const Navigator = ({ setIsActive, isActive}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isFocus, setIsFocus] = useState('movie')
     const [showSearch, setShowSearch] = useState(false)
-    const [inputValue, setInputValue] = useState()
+    const [inputValue, setInputValue] = useState('hello')
     const screenSize = useScreenSize()
 
     const { data: searchMovies = [], isLoading } = useSearchMoviesQuery({ title: inputValue, type: isFocus })
@@ -26,8 +24,8 @@ const Navigator = ({ setIsActive, isActive, scrollY }) => {
 
 
     return (
-        <motion.div
-            className={`${scrollY > 0 ? 'sticky bg-white' : 'h-auto w-full absolute top-0 z-30 py-[1%] px-[3%] backdrop-blur-sm'}`}>
+        <div
+            className={`h-auto w-full absolute top-0 z-30 py-[1%] px-[3%] backdrop-blur-sm`}>
             <div className='flex w-full h-[4rem] justify-between items-center'>
 
                 <div className='flex w-auto h-auto justify-center items-center gap-2 '>
@@ -58,14 +56,7 @@ const Navigator = ({ setIsActive, isActive, scrollY }) => {
                 </div>
                 <Account />
             </div >
-
-        </motion.div>
-    )
-}
-
-export default Navigator
-
-{/* {showSearch &&
+            {showSearch &&
                 <SearchedMovie
                     onOpen={onOpen}
                     isOpen={isOpen}
@@ -74,7 +65,7 @@ export default Navigator
                     <div className='flex flex-col w-full h-full gap-2'>
                         <div className='w-full flex justify-center items-center'>
                             <input
-                                className={`flex h-[2rem] rounded-full p-3 bg-slate-200 border ${screenSize.width < 700 ? 'w-[90%]' : 'w-full'}`}
+                                className={`flex h-[2rem] rounded-full p-3 bg-slate-200 border ${screenSize.width < 700 ? 'w-[90%]' : 'w-[70%]'}`}
                                 type='text'
                                 value={inputValue}
                                 onChange={handleInputValue}
@@ -115,4 +106,10 @@ export default Navigator
                         </div>
                     </div>
                 </SearchedMovie>
-            } */}
+            }
+        </div>
+    )
+}
+
+export default Navigator
+

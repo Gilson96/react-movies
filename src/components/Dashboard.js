@@ -52,7 +52,7 @@ const Dashboard = () => {
           {screeenSize.width > 1000 ?
             <MovieByList list={'on_the_air'} type={type} slidesPerView={5} spaceBetween={10} />
             :
-            <MovieByList list={'on_the_air'} type={type} slidesPerView={2} />
+            <MovieByList list={'on_the_air'} type={type} slidesPerView={1} />
           }
         </div>
       }
