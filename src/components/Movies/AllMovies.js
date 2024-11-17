@@ -22,7 +22,7 @@ const AllMovies = () => {
             </Link>
             <div className={`w-full h-full flex flex-wrap gap-3 items-center ${screenSize.width < 700 ? 'justify-between px-[2%]' : 'justify-center'}`}>
                 {movieByGenre.results.filter(movie => movie.backdrop_path !== null).map(movie =>
-                    <Link to={`/movies/${movie.id}`} state={type}>
+                    <Link to={`/movies/${movie.id}`} state={'movie'}>
                         <div
                             style={{
                                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}')`

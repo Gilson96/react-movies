@@ -26,6 +26,10 @@ const MovieDetails = () => {
   const { data: account = [] } = useGetAccountDetailsQuery()
   const screenSize = useScreenSize()
 
+  console.log(movieDetails)
+  console.log(account)
+  console.log(state)
+  console.log(movieId)
   if (isLoading) return <p>Loading</p>
   return (
     <div className='flex flex-col h-full w-full'>
