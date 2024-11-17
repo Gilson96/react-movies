@@ -8,26 +8,31 @@ import { useDisclosure } from '@chakra-ui/react'
 import Account from './Account/Account'
 import { SkeletonText, Box } from '@chakra-ui/react'
 import useScreenSize from '../features/useScreenSize'
+import { motion, useScroll, useSpring, useTransform } from "framer-motion"
 
-const Navigator = ({ setIsActive, isActive }) => {
+
+const Navigator = ({ setIsActive, isActive, scrollY }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isFocus, setIsFocus] = useState('movie')
     const [showSearch, setShowSearch] = useState(false)
     const [inputValue, setInputValue] = useState()
     const screenSize = useScreenSize()
+
     const { data: searchMovies = [], isLoading } = useSearchMoviesQuery({ title: inputValue, type: isFocus })
 
     const handleInputValue = (e) => {
         setInputValue(e.target.value)
     }
 
+
     return (
-        <div className='h-auto w-full absolute top-0 z-30 py-[2%] px-[3%] backdrop-blur-sm'>
+        <motion.div
+            className={`${scrollY > 0 ? 'sticky bg-white' : 'h-auto w-full absolute top-0 z-30 py-[1%] px-[3%] backdrop-blur-sm'}`}>
             <div className='flex w-full h-[4rem] justify-between items-center'>
 
                 <div className='flex w-auto h-auto justify-center items-center gap-2 '>
                     <p className={`text-white font-bold text-3xl ${screenSize.width < 700 && 'hidden'}`}>React-Movies</p>
-                    <FilmIcon className={`h-12 w-12 text-white ${screenSize.width < 700 && 'w-10 h-10'}`} />
+                    <FilmIcon className={`h-12 w-12 text-white ${screenSize.width < 700 && 'w-7 h-7'}`} />
                 </div>
 
                 <div className={`flex justify-between items-center border rounded-full pl-[2%] pr-[5px] bg-slate-950 h-[3.2rem]
@@ -54,7 +59,13 @@ const Navigator = ({ setIsActive, isActive }) => {
                 <Account />
             </div >
 
-            {showSearch &&
+        </motion.div>
+    )
+}
+
+export default Navigator
+
+{/* {showSearch &&
                 <SearchedMovie
                     onOpen={onOpen}
                     isOpen={isOpen}
@@ -104,9 +115,4 @@ const Navigator = ({ setIsActive, isActive }) => {
                         </div>
                     </div>
                 </SearchedMovie>
-            }
-        </div>
-    )
-}
-
-export default Navigator
+            } */}

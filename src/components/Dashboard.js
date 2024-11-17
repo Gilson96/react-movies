@@ -7,16 +7,24 @@ import CategoriesNew from './CategoriesNew'
 import useScreenSize from '../features/useScreenSize'
 import MovieByList from './Movies/MovieByList'
 import Footer from './Footer'
+import {
+  motion,
+  useScroll,
+  useSpring,
+  useTransform,
+  useViewportScroll,
+} from "framer-motion";
 
 const Dashboard = () => {
   const [type, setType] = useState('movie')
   const { data: trendingMovies = [], isLoading } = useGetTrendingMoviesQuery(type)
   const screeenSize = useScreenSize()
+  const { scrollY } = useScroll;
 
   return (
-    <div className='h-full w-full'>
+    <motion.div className='h-full w-full'>
 
-      <Navigator setIsActive={setType} isActive={type} />
+      <Navigator scrollY={scrollY} setIsActive={setType} isActive={type} />
 
       {isLoading ?
         <HeroSectionFallback />
@@ -33,40 +41,40 @@ const Dashboard = () => {
       {type === 'movie' &&
         < div className='mt-[1%] p-[3%]'>
           {screeenSize.width > 1000 ?
-            <MovieByList list={'upcoming'} type={type} slidesPerView={5} spaceBetween={10} />
+            <MovieByList list={'upcoming'} type={type} slidesPerView={5} />
             :
-            <MovieByList list={'upcoming'} type={type} slidesPerView={2} spaceBetween={20} />
+            <MovieByList list={'upcoming'} type={type} slidesPerView={2} />
           }
         </div>
       }
       {type === 'tv' &&
         < div className='mt-[1%] p-[3%]'>
           {screeenSize.width > 1000 ?
-            <MovieByList list={'on_the_air'} type={type} slidesPerView={5} spaceBetween={10} />
+            <MovieByList list={'on_the_air'} type={type} slidesPerView={5} />
             :
-            <MovieByList list={'on_the_air'} type={type} slidesPerView={2} spaceBetween={20} />
+            <MovieByList list={'on_the_air'} type={type} slidesPerView={2} />
           }
         </div>
       }
 
       <div className='mt-[1%] p-[3%]'>
         {screeenSize.width > 1000 ?
-          <MovieByList list={'popular'} type={type} slidesPerView={5} spaceBetween={10} />
+          <MovieByList list={'popular'} type={type} slidesPerView={5} />
           :
-          <MovieByList list={'popular'} type={type} slidesPerView={2} spaceBetween={20} />
+          <MovieByList list={'popular'} type={type} slidesPerView={2} />
         }
       </div>
 
       <div className='mt-[1%] p-[3%]'>
         {screeenSize.width > 1000 ?
-          <MovieByList list={'top_rated'} type={type} slidesPerView={5} spaceBetween={10} />
+          <MovieByList list={'top_rated'} type={type} slidesPerView={5} />
           :
-          <MovieByList list={'top_rated'} type={type} slidesPerView={2} spaceBetween={20}/>
+          <MovieByList list={'top_rated'} type={type} slidesPerView={2} />
         }
       </div>
 
       <Footer />
-    </div >
+    </motion.div >
   )
 }
 
