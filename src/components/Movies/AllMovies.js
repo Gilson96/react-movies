@@ -27,7 +27,7 @@ const AllMovies = () => {
                             style={{
                                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}')`
                             }}
-                            className={`${screenSize.width < 700 ? 'h-[10rem] w-[9rem]' : 'h-[22rem] w-[15rem]'}  gap-1 rounded-lg bg-no-repeat bg-cover bg-center `}
+                            className={`${screenSize.width < 700 ? 'h-[10rem] w-[10rem]' : 'h-[22rem] w-[15rem]'}  gap-1 rounded-lg bg-no-repeat bg-cover bg-center `}
                         >
                             <div className='h-full w-full flex flex-col items-start hover:bg-[rgb(0,0,0,0.5)] justify-end rounded-lg p-[3%]'>
                                 <p className={`${screenSize.width < 700 && 'text-xs'} text-white font-bold `}>{movie.title || movie.name}</p>
