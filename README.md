@@ -83,6 +83,3 @@ npm start
 - [ ] Add TypeScript
 - [ ] Add Testing
 
-## Acknowledgements
-Give credit here.
-- This project was inspired on [this design](https://www.behance.net/gallery/208056577/Movies-Website).
