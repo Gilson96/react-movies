@@ -78,12 +78,6 @@ npm start
 ```
 8. Enjoy
 
-## Usage
-How does one go about using it?
-Provide various use cases and code examples here.
-
-`write-your-code-here`
-
 ## Room for Improvement
 - [ ] Refactor
 - [ ] Add TypeScript
@@ -91,4 +85,4 @@ Provide various use cases and code examples here.
 
 ## Acknowledgements
 Give credit here.
-- This project was inspired on [this tutorial](https://www.behance.net/gallery/208056577/Movies-Website).
+- This project was inspired on [this design](https://www.behance.net/gallery/208056577/Movies-Website).
