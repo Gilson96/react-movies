@@ -5,7 +5,6 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid'
 const MovieByGenre = ({ genre, title, type, genreName }) => {
     const { data: movieByGenre = [], isLoading } = useGetMovieByGenreQuery({ genre: genre, type: type })
 
-
     if (isLoading) return <p>is Loading</p>
     return (
         <>

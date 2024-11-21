@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { FilmIcon } from '@heroicons/react/24/outline'
-import { useSearchMoviesQuery } from '../features/Movies/allMoviesApi'
-import Card from '../components/Card'
-import SearchedMovie from './Movies/SearchedMovie'
+import { useSearchMoviesQuery } from '../../features/Movies/allMoviesApi'
+import Card from '../Card'
+import SearchedMovie from '../Movies/SearchedMovie'
 import { useDisclosure } from '@chakra-ui/react'
-import Account from './Account/Account'
+import Account from '../Account/Account'
 import { SkeletonText, Box } from '@chakra-ui/react'
-import useScreenSize from '../features/useScreenSize'
+import useScreenSize from '../../features/useScreenSize'
+import { motion } from "framer-motion";
+import NavigatorMobile from './NavigatorMobile'
 
-const Navigator = ({ setIsActive, isActive}) => {
+const Navigator = ({ setIsActive, isActive }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isFocus, setIsFocus] = useState('movie')
     const [showSearch, setShowSearch] = useState(false)
@@ -22,40 +24,48 @@ const Navigator = ({ setIsActive, isActive}) => {
         setInputValue(e.target.value)
     }
 
-
     return (
-        <div
-            className={`h-auto w-full absolute top-0 z-30 py-[1%] px-[3%] backdrop-blur-sm`}>
-            <div className='flex w-full h-[4rem] justify-between items-center'>
-
-                <div className='flex w-auto h-auto justify-center items-center gap-2 '>
-                    <p className={`text-white font-bold text-3xl ${screenSize.width < 700 && 'hidden'}`}>React-Movies</p>
-                    <FilmIcon className={`h-12 w-12 text-white ${screenSize.width < 700 && 'w-7 h-7'}`} />
-                </div>
-
-                <div className={`flex justify-between items-center border rounded-full pl-[2%] pr-[5px] bg-slate-950 h-[3.2rem]
-                     ${screenSize.width < 700 && 'w-[50%]'}`}>
-                    <div
-                        className={`flex justify-center items-center text-slate-400 cursor-pointer w-[5rem]`}
-                        onClick={() => { setIsActive('movie'); setIsFocus('movie') }}
-                    >
-                        <p className={` ${isFocus === 'movie' ? 'text-white' : ''} ${screenSize.width < 700 && 'text-xs'}`}>Movies</p>
+        <div className={`h-auto w-full absolute top-0 z-30 py-[1%] px-[3%] backdrop-blur-sm`}>
+            {screenSize.width < 700 ?
+                <div className='flex justify-between mt-[1%]'>
+                    <div className='flex w-auto h-auto justify-center items-center gap-2 '>
+                        <p className={`text-white font-bold text-lg `}>React-Movies</p>
+                        <FilmIcon className={`h-12 w-12 text-white ${screenSize.width < 700 && 'w-7 h-7'}`} />
                     </div>
-                    <p
-                        className={`flex justify-center items-center text-slate-400 cursor-pointer w-[5rem]`}
-                        onClick={() => { setIsActive('tv'); setIsFocus('tv') }}
-                    >
-                        <p className={` ${isFocus === 'tv' ? 'text-white' : ''} ${screenSize.width < 700 && 'text-xs'}`}>Series</p>
-                    </p>
-                    <i
-                        className={`bg-slate-700 flex justify-center items-center w-[2.5rem] h-[2.5rem] rounded-full cursor-pointer ${screenSize.width < 700 && 'h-[2rem] w-[2.3rem] p-1'}`}
-                        onClick={() => { setShowSearch(true); onOpen(); }}
-                    >
-                        <MagnifyingGlassIcon className='w-4 h-4 text-white' />
-                    </i>
+                    <NavigatorMobile />
                 </div>
-                <Account />
-            </div >
+                :
+                <div className='flex w-full h-[4rem] justify-between items-center'>
+                    <div className='flex w-auto h-auto justify-center items-center gap-2 '>
+                        <p className={`text-white font-bold text-3xl ${screenSize.width < 700 && 'hidden'}`}>React-Movies</p>
+                        <FilmIcon className={`h-12 w-12 text-white ${screenSize.width < 700 && 'w-7 h-7'}`} />
+                    </div>
+
+                    <div className={`flex justify-between items-center border rounded-full pl-[2%] pr-[5px] bg-slate-950 h-[3.2rem]
+                     ${screenSize.width < 700 && 'w-[50%]'}`}>
+                        <div
+                            className={`flex justify-center items-center text-slate-400 cursor-pointer w-[5rem]`}
+                            onClick={() => { setIsActive('movie'); setIsFocus('movie') }}
+                        >
+                            <p className={`${isFocus === 'movie' ? 'text-white' : ''} ${screenSize.width < 700 && 'text-xs'}`}>Movies</p>
+                        </div>
+                        <div
+                            className={`flex justify-center items-center text-slate-400 cursor-pointer w-[5rem]`}
+                            onClick={() => { setIsActive('tv'); setIsFocus('tv') }}
+                        >
+                            <p className={`${isFocus === 'tv' ? 'text-white' : ''} ${screenSize.width < 700 && 'text-xs'}`}>Series</p>
+                        </div>
+                        <i
+                            className={`bg-slate-700 flex justify-center items-center w-[2.5rem] h-[2.5rem] rounded-full cursor-pointer ${screenSize.width < 700 && 'h-[2rem] w-[2.3rem] p-1'}`}
+                            onClick={() => { setShowSearch(true); onOpen(); }}
+                        >
+                            <MagnifyingGlassIcon className='w-4 h-4 text-white' />
+                        </i>
+                    </div>
+
+                    <Account />
+                </div >
+            }
             {showSearch &&
                 <SearchedMovie
                     onOpen={onOpen}

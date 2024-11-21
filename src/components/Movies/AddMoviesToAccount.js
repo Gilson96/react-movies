@@ -3,14 +3,17 @@ import { EyeIcon, HeartIcon } from '@heroicons/react/24/outline'
 import { Alert, AlertIcon } from '@chakra-ui/react'
 import useScreenSize from '../../features/useScreenSize'
 import { useParams } from 'react-router-dom'
+import { useGetAccountDetailsQuery } from '../../features/Account/accountApi';
 
-const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, addToRated, eyeIcon, heartIcon, starIcon, movieDetails, account }) => {
+const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, addToRated, eyeIcon, heartIcon, starIcon, movieDetails }) => {
+    const { data: account = [], isLoading } = useGetAccountDetailsQuery()
     const { movieId } = useParams()
     const screenSize = useScreenSize()
     const [watchlistFeedback, setWatchlistFeedback] = useState()
     const [favouriteFeedback, setFavouriteFeedback] = useState()
     const newMovieDetails = { id: Math.floor(Math.random() * 101), movieDetails }
 
+    if (isLoading) return <p>Loading</p>
     const handleIfMovieExistInWatchlist = () => {
         let movieExist = []
 

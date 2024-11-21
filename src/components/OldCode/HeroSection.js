@@ -8,9 +8,9 @@ import { Pagination } from 'swiper/modules';
 import { Link } from 'react-router-dom';
 import { ListBulletIcon } from '@heroicons/react/24/solid';
 import { StarIcon } from '@heroicons/react/24/solid';
-import { useGetMovieGenreListQuery } from '../features/Movies/moviesByGenreApi';
-import useScreenSize from '../features/useScreenSize'
-import HeroSectionFallback from './Fallback/HeroSectionFallback';
+import { useGetMovieGenreListQuery } from '../../features/Movies/moviesByGenreApi';
+import useScreenSize from '../../features/useScreenSize'
+import HeroSectionFallback from '../Fallback/HeroSectionFallback';
 
 const HeroSection = ({ data, type, setIsActive, isActive, handleGenre }) => {
     const { data: genreList = [], isLoading } = useGetMovieGenreListQuery('movie')
@@ -40,9 +40,8 @@ const HeroSection = ({ data, type, setIsActive, isActive, handleGenre }) => {
                 :
                 <Swiper
                     modules={[Pagination]}
-                    className="flex h-screen w-full"
+                    className="flex h-[40rem] w-full"
                     slidesPerView={1}
-                    pagination={{ dynamicBullets: true }}
                     loop={true}
                     autoplay={{
                         delay: 2000,
@@ -82,9 +81,10 @@ const HeroSection = ({ data, type, setIsActive, isActive, handleGenre }) => {
                                         <Link
                                             to={`movies/${data.id}`}
                                             state={type}
-                                            className={`h-auto w-[9rem] bg-white p-2 border rounded flex justify-center items-center gap-1 shadow-md hover:bg-white/70 ${screenSize.width < 700 ? 'w-[8rem]' : 'w-[9rem]'}`}
                                         >
-                                            <button className={`text-black ${screenSize.width < 700 && 'text-sm'}`}>More details</button>
+                                            <button className={`px-8 py-3 font-medium bg-cyan-500 text-white w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] rounded-xl text-sm`}>
+                                                See more
+                                            </button>
                                             <i><ListBulletIcon className={`text-black ${screenSize.width < 700 ? 'h-4 w-4' : 'h-5 w-5'}`} /></i>
                                         </Link>
                                     </div>

@@ -1,36 +1,32 @@
 import React, { useState } from 'react'
-import HeroSection from './HeroSection'
 import { useGetTrendingMoviesQuery } from '../features/Movies/moviesByGenreApi'
-import Navigator from './Navigator'
-import HeroSectionFallback from './Fallback/HeroSectionFallback'
+import Navigator from '../components/UI/Navigator'
 import CategoriesNew from './CategoriesNew'
 import useScreenSize from '../features/useScreenSize'
 import MovieByList from './Movies/MovieByList'
 import Footer from './Footer'
-import {
-  motion,
-  useScroll,
-  useSpring,
-  useTransform,
-  useViewportScroll,
-} from "framer-motion";
+import { SwipeCarousel } from '../components/UI/HeroCarousel'
+import HeroSection from './OldCode/HeroSection'
 
 const Dashboard = () => {
   const [type, setType] = useState('movie')
-  const { data: trendingMovies = [], isLoading } = useGetTrendingMoviesQuery(type)
   const screeenSize = useScreenSize()
-  const { scrollY } = useScroll;
+  const { data: trendingMovies = [], isLoading } = useGetTrendingMoviesQuery(type)
 
   return (
-    <motion.div className='h-full w-full'>
+    <div className='h-full w-full'>
 
-      <Navigator scrollY={scrollY} setIsActive={setType} isActive={type} />
+      <Navigator setIsActive={setType} isActive={type} />
 
       {isLoading ?
-        <HeroSectionFallback />
+        <p>loading</p>
         :
-        <HeroSection data={trendingMovies} type={type} />
+        screeenSize.width < 700 ?
+          <HeroSection type={type} data={trendingMovies} />
+          :
+          <SwipeCarousel type={type} data={trendingMovies} />
       }
+
 
       {screeenSize.width > 1000 ?
         <CategoriesNew type={type} slidesPerView={3.5} />
@@ -74,7 +70,7 @@ const Dashboard = () => {
       </div>
 
       <Footer />
-    </motion.div >
+    </div >
   )
 }
 

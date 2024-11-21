@@ -23,13 +23,8 @@ const MovieDetails = () => {
   const { data: movieDetails = [], isLoading } = useGetMovieDetailsQuery({ id: newMovieId, type: state })
   const [addToFavourite] = usePostToFavouriteMoviesMutation()
   const [addToWatchlist] = usePostToWatchlistMoviesMutation()
-  const { data: account = [] } = useGetAccountDetailsQuery()
   const screenSize = useScreenSize()
 
-  console.log(movieDetails)
-  console.log(account)
-  console.log(state)
-  console.log(movieId)
   if (isLoading) return <p>Loading</p>
   return (
     <div className='flex flex-col h-full w-full'>
@@ -84,7 +79,6 @@ const MovieDetails = () => {
               movieDetails={movieDetails}
               addToWatchlist={addToWatchlist}
               addToFavourite={addToFavourite}
-              account={account}
               eyeIcon={<EyeIcon className='h-10 w-10 text-green-400' />}
               heartIcon={<HeartIcon className='h-10 w-10 text-red-400' />}
             />
