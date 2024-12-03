@@ -18,6 +18,7 @@ const MyMovies = () => {
     const [favouriteFeedback, setFavouriteFeedback] = useState()
     const [isActive, setIsActive] = useState('watchlist')
 
+    console.log(account)
     return (
         <div className={`flex flex-col w-full h-screen p-[2%]`}>
             <>
@@ -63,7 +64,7 @@ const MyMovies = () => {
                                             </div>
                                         }
                                         <div className={`w-full h-full flex items-start`}>
-                                            <Link to={`/movies/${movie.movieDetails.id}`} state={state}>
+                                            <Link to={`/movies/${movie.movieDetails.id}`} state={state= (movie.movieDetails.runtime ? 'movie' : 'tv')}>
                                                 <div
                                                     style={{
                                                         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.movieDetails.backdrop_path}')`
@@ -105,7 +106,7 @@ const MyMovies = () => {
                                             </div>
                                         }
                                         <div className={`w-full h-full flex items-start`}>
-                                            <Link to={`/movies/${movie.movieDetails.id}`} state={state}>
+                                            <Link to={`/movies/${movie.movieDetails.id}`} state={state= (movie.movieDetails.runtime ? 'movie' : 'tv')}>
                                                 <div
                                                     style={{
                                                         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.movieDetails.backdrop_path}')`
