@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-movies/static/css/main.23ad0201.css",
-    "main.js": "/react-movies/static/js/main.4930e375.js",
+    "main.js": "/react-movies/static/js/main.62b8e61b.js",
     "static/media/animation.jpg": "/react-movies/static/media/animation.f3b7a799932e63ab2262.jpg",
     "static/media/documentary.jpg": "/react-movies/static/media/documentary.f22677d9a4cea0541f1b.jpg",
     "static/media/crime.jpg": "/react-movies/static/media/crime.780f68e8f66dec60f244.jpg",
@@ -9,10 +9,10 @@
     "static/media/action.jpg": "/react-movies/static/media/action.3bc44420e7f015abb3ed.jpg",
     "index.html": "/react-movies/index.html",
     "main.23ad0201.css.map": "/react-movies/static/css/main.23ad0201.css.map",
-    "main.4930e375.js.map": "/react-movies/static/js/main.4930e375.js.map"
+    "main.62b8e61b.js.map": "/react-movies/static/js/main.62b8e61b.js.map"
   },
   "entrypoints": [
     "static/css/main.23ad0201.css",
-    "static/js/main.4930e375.js"
+    "static/js/main.62b8e61b.js"
   ]
 }
