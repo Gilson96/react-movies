@@ -77,7 +77,7 @@ const MovieRecommendations = ({ movieId, slidesPerView, modules, spaceBetween, i
                         ))}
                     </Swiper >
                     :
-                    <p className='font-bold'>Not Available</p>
+                    <p className='font-bold text-neutral-400'>Not Available</p>
             }
 
         </div>

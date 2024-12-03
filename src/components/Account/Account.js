@@ -1,34 +1,34 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { UserCircleIcon} from '@heroicons/react/24/solid'
+import { UserCircleIcon } from '@heroicons/react/24/solid'
 import { useGetAccountDetailsQuery } from '../../features/Account/accountApi';
-import { Spinner } from '@chakra-ui/react'
+import BarLoader from '../UI/BarLoader'
+import useScreenSize from '../../features/useScreenSize';
 
-const Account = ({ ...rest }) => {
+const Account = ({ type, ...rest }) => {
   const { data: account = [], isLoading } = useGetAccountDetailsQuery()
-
+  const screenSize = useScreenSize()
   return (
     <>
 
       {isLoading ?
-        <div className='flex h-[3.2rem] gap-2 justify-center items-center border rounded-full bg-black/5 cursor-pointer w-[7rem]'>
-          <Spinner
-            thickness='4px'
-            speed='0.65s'
-            emptyColor='gray.200'
-            color='blue.500'
-            size='lg'
-          />
+        <div className='flex h-[3.2rem] gap-2 justify-center items-center w-[7rem]'>
+          <UserCircleIcon className='h-10 w-10 text-white' />
+          <BarLoader height={'h-5'} />
         </div>
         :
         <div className='flex h-[3.2rem] w-auto gap-2 justify-center items-center cursor-pointer'>
-          <Link to='/movies/myMovies' state={account} className='w-full'>
+          <Link to='/movies/myMovies' state={type} className='w-full'>
             <button
               {...rest}
-              className="group relative px-4 py-2 font-medium text-slate-100 transition-colors duration-[400ms] hover:text-indigo-300"
+              className="group relative  py-2 font-medium text-slate-100 transition-colors duration-[400ms] hover:text-indigo-300"
             >
+              {screenSize.width < 700 ?
+                <UserCircleIcon className='h-10 w-10' />
+                :
+                <span className='flex items-center gap-2 text-xl'> <UserCircleIcon className='h-10 w-10' />My Account</span>
+              }
 
-              <span className='flex items-center gap-2 text-xl'> <UserCircleIcon className='h-10 w-10' />My Account</span>
 
               {/* TOP */}
               <span className="absolute left-0 top-0 h-[2px] w-0 bg-indigo-300 transition-all duration-100 group-hover:w-full" />

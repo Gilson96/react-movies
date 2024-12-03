@@ -15,7 +15,6 @@ const MovieByList = ({ slidesPerView, spaceBetween, list, type, handleGenre }) =
     const screenSize = useScreenSize()
 
 
-
     return (
         <>
             <p className={`pb-[1%] text-white text-2xl capitalize ${screenSize.width < 700 ? 'text-base' : 'text-2xl'} `}>{list.replaceAll('_', ' ')} {type}</p>

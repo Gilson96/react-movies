@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline'
-import { Link } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { Alert, AlertIcon } from '@chakra-ui/react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { useRemoveWatchlistMoviesMutation, useRemoveFavouriteMoviesMutation, useGetAccountDetailsQuery } from '../../features/Account/accountApi'
 import useScreenSize from '../../features/useScreenSize'
 import { SkeletonText, Box } from '@chakra-ui/react'
+import Toggle from '../UI/Toggle';
 
 const MyMovies = () => {
     const { data: account, isLoading } = useGetAccountDetailsQuery()
+    let { state } = useLocation();
     const screenSize = useScreenSize()
     const [removeMoviefromWatchlist] = useRemoveWatchlistMoviesMutation()
     const [removeMoviefromFavourite] = useRemoveFavouriteMoviesMutation()
@@ -34,20 +36,7 @@ const MyMovies = () => {
                     </div>
 
                     {/* Watchlist and favourites toggle */}
-                    <div className={`flex w-full justify-end gap-1`}>
-                        <div
-                            onClick={() => { setIsActive('watchlist') }}
-                            className={`flex justify-center items-center rounded-full w-auto p-[3%] ${screenSize.width < 700 ? '  text-xs' : 'text-base'} cursor-pointer ${isActive === 'watchlist' ? 'bg-white' : 'bg-white/40'}`}
-                        >
-                            <p>Watchlist</p>
-                        </div>
-                        <div
-                            onClick={() => { setIsActive('favourite') }}
-                            className={`flex justify-center items-center rounded-full w-auto p-[3%] ${screenSize.width < 700 ? ' text-xs' : 'text-base'} cursor-pointer ${isActive === 'favourite' ? 'bg-white' : 'bg-white/40'}`}
-                        >
-                            <p>Favourite</p>
-                        </div>
-                    </div>
+                    <Toggle isActive={isActive} setIsActive={setIsActive}/>
                 </div>
 
                 {/* Watchlist Movies */}
@@ -74,7 +63,7 @@ const MyMovies = () => {
                                             </div>
                                         }
                                         <div className={`w-full h-full flex items-start`}>
-                                            <Link to={`/movies/${movie.movieDetails.id}`} >
+                                            <Link to={`/movies/${movie.movieDetails.id}`} state={state}>
                                                 <div
                                                     style={{
                                                         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.movieDetails.backdrop_path}')`
@@ -116,7 +105,7 @@ const MyMovies = () => {
                                             </div>
                                         }
                                         <div className={`w-full h-full flex items-start`}>
-                                            <Link to={`/movies/${movie.movieDetails.id}`} >
+                                            <Link to={`/movies/${movie.movieDetails.id}`} state={state}>
                                                 <div
                                                     style={{
                                                         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.movieDetails.backdrop_path}')`

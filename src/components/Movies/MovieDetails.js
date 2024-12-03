@@ -15,7 +15,7 @@ import { useGetAccountDetailsQuery } from '../../features/Account/accountApi';
 import { FilmIcon } from '@heroicons/react/24/outline';
 import useScreenSize from '../../features/useScreenSize'
 import { StarIcon } from '@heroicons/react/24/solid';
-
+import { Tooltip } from '@chakra-ui/react'
 const MovieDetails = () => {
   let { movieId } = useParams();
   let { state } = useLocation();

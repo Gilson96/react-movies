@@ -67,7 +67,7 @@ const HeroSection = ({ data, type, setIsActive, isActive, handleGenre }) => {
                                         </div>
 
                                     </div>
-                                    <div className={`flex gap-2 w-full ${screenSize.width < 700 && 'flex-warp'}`}>
+                                    <div className={`flex gap-2 w-full flex-warp`}>
                                         {handleGenre(data).map(genre =>
                                             <div className={`border border-[#F6F7EB] rounded-full  ${screenSize.width < 700 ? 'py-3 px-3' : 'py-3 px-5'}`}>
                                                 <p className={`text-[#F6F7EB] font-bold ${screenSize.width < 700 && 'text-xs'} `}> {genre}</p>
