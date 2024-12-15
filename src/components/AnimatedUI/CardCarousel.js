@@ -2,11 +2,12 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import useMeasure from "react-use-measure";
-import { useGetMovieByListQuery, useGetMovieGenreListQuery } from '../../features/Movies/moviesByGenreApi'
-import { StarIcon } from "@heroicons/react/24/solid";
+import { useGetMovieByListQuery } from '../../features/Movies/moviesByGenreApi'
 import useScreenSize from "../../features/useScreenSize";
 import { Link } from "react-router-dom";
 import { SkeletonText, Box } from '@chakra-ui/react'
+import AnimatedButton from "./AnimatedButton";
+import AnimatedDropDown from "./AnimatedDropdownMenu";
 
 const CARD_WIDTH = 350;
 const MARGIN = 20;
@@ -17,11 +18,12 @@ const BREAKPOINTS = {
     lg: 1024,
 };
 
-const CardCarousel = ({ list, type }) => {
+const CardCarousel = ({ type }) => {
     const [ref, { width }] = useMeasure();
     const [offset, setOffset] = useState(0);
+    const [isActive, setIsActive] = useState('popular');
     const screenSize = useScreenSize()
-    const { data: movieByList = [], isLoading } = useGetMovieByListQuery({ list: list, type: type })
+    const { data: movieByList = [], isLoading } = useGetMovieByListQuery({ list: isActive, type: type })
 
     if (isLoading) return <p>loading</p>
     const CARD_BUFFER =
@@ -49,30 +51,33 @@ const CardCarousel = ({ list, type }) => {
     if (isLoading) return <p>Loading</p>
 
     return (
-        <section className="w-full h-full" ref={ref}>
+        <section className="w-full pr-[3%]" ref={ref}>
             <div className="relative overflow-hidden">
                 <div className="px-[3%]">
-                    <p className={`pb-[1%] text-white text-2xl capitalize ${screenSize.width < 700 ? 'text-base' : 'text-2xl'} `}>{list.replaceAll('_', ' ')} {type}</p>
-                    <p className={` text-slate-400 ${screenSize.width < 700 ? 'text-sm' : 'text-xl'}`}>Explore diverse movie categories, from action to drama and everything in between</p>
                     <div className="flex items-center justify-between pb-[1%]">
-                        <p></p>
-                        <div className="flex items-center gap-2">
-                            <button
-                                className={`rounded-lg border-[1px] border-neutral-400 bg-white p-1.5 text-2xl transition-opacity ${CAN_SHIFT_LEFT ? "" : "opacity-30"
-                                    }`}
-                                disabled={!CAN_SHIFT_LEFT}
-                                onClick={shiftLeft}
-                            >
-                                <FiArrowLeft />
-                            </button>
-                            <button
-                                className={`rounded-lg border-[1px] border-neutral-400 bg-white p-1.5 text-2xl transition-opacity ${CAN_SHIFT_RIGHT ? "" : "opacity-30"
-                                    }`}
-                                disabled={!CAN_SHIFT_RIGHT}
-                                onClick={shiftRight}
-                            >
-                                <FiArrowRight />
-                            </button>
+                        <div className="w-full h-full flex justify-between items-center gap-2">
+                            <p className={`w-full text-white text-2xl capitalize font-bold ${screenSize.width < 700 ? 'text-base' : 'text-2xl'} `}>{isActive.replaceAll('_', ' ')} {type}</p>
+                            <div className="h-full w-full justify-end items-center flex gap-12">
+                                <AnimatedDropDown setIsActive={setIsActive} isActive={isActive} />
+                                <div>
+                                    <button
+                                        className={`rounded-lg border-[1px] border-neutral-400 bg-white p-1.5 text-2xl transition-opacity ${CAN_SHIFT_LEFT ? "" : "opacity-30"
+                                            }`}
+                                        disabled={!CAN_SHIFT_LEFT}
+                                        onClick={shiftLeft}
+                                    >
+                                        <FiArrowLeft />
+                                    </button>
+                                    <button
+                                        className={`rounded-lg border-[1px] border-neutral-400 bg-white p-1.5 text-2xl transition-opacity ${CAN_SHIFT_RIGHT ? "" : "opacity-30"
+                                            }`}
+                                        disabled={!CAN_SHIFT_RIGHT}
+                                        onClick={shiftRight}
+                                    >
+                                        <FiArrowRight />
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <motion.div
@@ -82,7 +87,7 @@ const CardCarousel = ({ list, type }) => {
                         transition={{
                             ease: "easeInOut",
                         }}
-                        className="flex"
+                        className="flex w-full"
                     >
                         {isLoading ?
                             <div className="flex gap-2">
@@ -102,102 +107,73 @@ const CardCarousel = ({ list, type }) => {
                                     <SkeletonText mt='4' noOfLines={10} spacing='4' skeletonHeight='2' />
                                 </Box>
                             </div>
-                :
+                            :
                             movieByList.results.map((movie) => (
-                <Link to={`/movies/${movie.id}`} state={type}>
-                    <Post
-                        key={movie.id}
-                        imgUrl={`https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}`}
-                        title={movie.title || movie.name}
-                        author={movie.vote_average.toFixed(1)}
-                        // year={movie.release_date.slice(0, 4) || movie.first_air_date.slice(0, 4)}
-                        movie={movie}
-                    />
-                </Link>
-                ))
+                                <div className="">
+                                    <Link to={`/movies/${movie.id}`} state={type}>
+                                        <Post
+                                            key={movie.id}
+                                            imgUrl={`https://image.tmdb.org/t/p/w1280/${movie.poster_path}`}
+                                            title={movie.title || movie.name}
+                                            author={movie.vote_average.toFixed(1)}
+                                            movie={movie}
+                                            type={type}
+                                        />
+                                    </Link>
+                                </div>
+                            ))
                         }
-            </motion.div>
-        </div>
+
+                    </motion.div>
+                </div>
             </div >
         </section >
     );
 };
 
-const Post = ({ imgUrl, author, title, description, list, year, movie }) => {
-    const { data: genreList = [], isLoading } = useGetMovieGenreListQuery('movie')
-
-    if (isLoading) return <p>Loading</p>
-
-    const handleGenre = (movie) => {
-        let movieGenreName = []
-        let movieGenreId = 0
-
-        for (let i = 0; i < movie.genre_ids.length; i++) {
-
-            movieGenreId = movie.genre_ids[i]
-
-            for (let i = 0; i < genreList.genres.length; i++) {
-                if (genreList.genres[i].id === movieGenreId)
-                    movieGenreName.push(genreList.genres[i].name)
-            }
-        }
-        return movieGenreName
-    }
+const Post = ({ imgUrl, author, title, description, list, year, movie, type }) => {
+    const [mouseHover, setMouseHover] = useState()
 
     return (
-        <DrawOutlineButton>
-            <div
-                className="relative shrink-0 cursor-pointer transition-transform hover:-translate-y-1 h-full p-[2%]"
-                style={{
-                    width: CARD_WIDTH,
-                    marginRight: MARGIN,
-                }}
-            >
-                <img
-                    src={imgUrl}
-                    className="mb-3 h-[200px] w-full rounded-lg object-cover"
-                    alt='#'
-                />
-                <span className="rounded-md border-[1px] border-neutral-500 px-1.5 py-1 text-xs uppercase text-white flex items-center justify-center w-[3rem] gap-1">
-                    <StarIcon className='text-yellow-400 h-4 w-4' />
-                    {author}
-                </span>
-                <p className="mt-1.5 text-2xl py-2 font-medium text-white">{title} </p>
-                <hr className="bg-white h-[px] w-full mb-[3%]" />
-                <div className={`flex gap-2 w-[90%] flex-wrap`}>
-                    {handleGenre(movie).map(genre =>
-                        <div className={`border border-[#F6F7EB] rounded-full p-2`}>
-                            <p className={`text-[#F6F7EB] font-bold`}> {genre}</p>
-                        </div>
-                    )}
-                </div>
-            </div>
-        </DrawOutlineButton>
-    );
-};
 
-const DrawOutlineButton = ({ children, ...rest }) => {
-    return (
         <div
-            {...rest}
-            className="group relative p-[2%] font-medium text-slate-100 transition-colors duration-[400ms] hover:text-indigo-300"
+            className="cursor-pointer transition-transform hover:-translate-y-1 h-full p-[2%] animate__animated animate__fadeInRight"
+            style={{
+                width: CARD_WIDTH,
+            }}
         >
-            <span>{children}</span>
+            <div
+                onMouseOver={() => setMouseHover(movie.id)}
+                onMouseLeave={() => setMouseHover(false)}
+                className={`flex flex-col h-[25rem] w-[100%] items-start justify-end gap-1 rounded-lg bg-[url(https://image.tmdb.org/t/p/w1280/${movie.poster_path})]  bg-center bg-no-repeat bg-cover`}
+            >
+                {mouseHover === movie.id &&
+                    <div
+                        style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))` }}
+                        className='h-full w-full transition-all animate__animated animate__fadeInUp animate__faster flex flex-col justify-center items-center gap-2'
+                    >
+                        <p className='text-white w-full text-center text-2xl font-bold'>{movie.title || movie.name}<span> &#8226; {type === 'movie' && '(' + movie.release_date.slice(0, 4) + ')'}{type === 'tv' && '(' + movie.first_air_date.slice(0, 4) + ')'}</span></p>
 
-            {/* TOP */}
-            <span className="absolute left-0 top-0 h-[2px] w-0 bg-white transition-all duration-100 group-hover:w-full" />
 
-            {/* RIGHT */}
-            <span className="absolute right-0 top-0 h-0 w-[2px] bg-white transition-all delay-100 duration-100 group-hover:h-full" />
+                        <div className="w-full flex justify-center items-center p-[2%] ">
+                            <AnimatedButton genreName={'More Details'} specialStyle={{
+                                backgroundColor: '#e5e5e5',
+                                color: '#262626',
+                                fontSize: 0.7 + 'rem',
+                                paddingTop: 0.8 + 'rem',
+                                paddingBottom: 0.8 + 'rem',
+                                width: 8 + 'rem'
 
-            {/* BOTTOM */}
-            <span className="absolute bottom-0 right-0 h-[2px] w-0 bg-white transition-all delay-200 duration-100 group-hover:w-full" />
-
-            {/* LEFT */}
-            <span className="absolute bottom-0 left-0 h-0 w-[2px] bg-white transition-all delay-300 duration-100 group-hover:h-full" />
-        </div>
+                            }} />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div >
     );
 };
+
+
 
 export default CardCarousel;
 

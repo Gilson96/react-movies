@@ -15,11 +15,16 @@ const AllMovies = () => {
     if (isLoading) return <p>Loading</p>
     return (
         <div>
-            <p className='text-white capitalize p-[3%] text-2xl'>{genreName}</p>
+            {/* Title */}
+            <p className='text-white uppercase p-[3%] text-3xl font-bold'>{genreName}</p>
+
+            {/* back to Home link */}
             <Link to='/'>
                 <ArrowLeftCircleIcon className={` absolute text-white hover:text-white/50 ${screenSize.width < 700 ? 'right-[0.2rem] top-[0.5rem] w-[2rem] h-[2rem]' : 'right-[3rem] top-[2rem] w-10 h-10'}`} />
             </Link>
-            <div className={`w-full h-full flex flex-wrap  items-center ${screenSize.width < 700 ? 'justify-center gap-2 mt-[1rem]' : 'justify-center'}`}>
+
+            {/* All movies */}
+            <div className={`w-full h-full flex flex-wrap items-center ${screenSize.width < 700 ? 'justify-center gap-2 mt-[1rem]' : 'justify-center gap-2'}`}>
                 {movieByGenre.results.filter(movie => movie.backdrop_path !== null).map(movie =>
                     <Link to={`/movies/${movie.id}`} state={type}>
                         <div

@@ -5,6 +5,7 @@ import useScreenSize from "../../features/useScreenSize";
 import { StarIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
 import { SkeletonCircle, SkeletonText, Box } from '@chakra-ui/react'
+import AnimatedButton from './AnimatedButton'
 
 const ONE_SECOND = 1000;
 const AUTO_DELAY = ONE_SECOND * 10;
@@ -19,6 +20,8 @@ const SPRING_OPTIONS = {
 
 
 export const SwipeCarousel = ({ data, type }) => {
+    console.log(type)
+    console.log(data)
 
     const [imgIndex, setImgIndex] = useState(0);
 
@@ -53,6 +56,7 @@ export const SwipeCarousel = ({ data, type }) => {
 
     return (
         <div className="overflow-hidden w-full h-full">
+            
             <motion.div
                 drag="x"
                 dragConstraints={{
@@ -67,10 +71,9 @@ export const SwipeCarousel = ({ data, type }) => {
                 }}
                 transition={SPRING_OPTIONS}
                 onDragEnd={onDragEnd}
-                className="flex cursor-grab items-center active:cursor-grabbing h-screen w-full mt-[2%]"
+                className="flex cursor-grab items-center active:cursor-grabbing h-screen w-full "
             >
                 <Images imgIndex={imgIndex} imgs={data} type={type} />
-
             </motion.div>
 
             <Dots imgIndex={imgIndex} setImgIndex={setImgIndex} imgs={data} />
@@ -112,56 +115,62 @@ const Images = ({ imgs, type }) => {
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                         }}
-                        animate={{
-                            scale: data.backdrop_path === idx ? 0.95 : 0.85,
-                        }}
+
                         transition={SPRING_OPTIONS}
                         className="w-full h-full shrink-0"
                     >
                         {isLoading ?
-                            <div className="w-full h-full flex justify-between items-center px-[10%] bg-neutral-950/80">
-                                <Box padding='6'  bg='neutral-600' width={'20rem'} height={'25rem'} >
+                            <div className="w-full h-full flex justify-center items-center pl-[15%] bg-neutral-950/80">
+                                <Box padding='6' bg='neutral-600' width={'20rem'} height={'25rem'} >
                                     <SkeletonText mt='4' noOfLines={12} spacing='4' skeletonHeight='2' />
-                                </Box> 
+                                </Box>
                                 <Box padding='6' boxShadow='lg' bg='neutral-600' width={'15rem'} height={'25rem'} rounded={'xl'} border={'1px solid white'} marginRight={'15rem'}>
                                     <SkeletonText mt='4' noOfLines={12} spacing='4' skeletonHeight='2' />
-                                </Box>           
+                                </Box>
                             </div>
                             :
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.5 }}
-                                className="w-full h-full flex justify-center items-center px-[2%]"
+                                className="w-full h-full flex justify-center items-center "
 
                             >
-                                <div className='flex flex-col gap-[1rem] w-full'>
-                                    <p className={`text-white font-bold ${screenSize.width < 700 ? 'text-2xl' : 'text-[3rem]'} `}>{data.name || data.title}</p>
+                                <div className='flex flex-col gap-[1rem] w-full pl-[20%]'>
+                                    <p className={`text-white font-bold ${screenSize.width < 700 ? 'text-2xl' : 'text-[2rem]'} `}>{data.name || data.title}</p>
                                     <div className='flex gap-3'>
                                         <div className='flex gap-1 items-center'>
-                                            <i><StarIcon className='w-7 h-7 text-yellow-400' /></i>
-                                            <p className='text-white text-xl'>{data.vote_average.toFixed(1)}/10</p>
+                                            <i><StarIcon className='w-5 h-5 text-yellow-400' /></i>
+                                            <p className='text-white text-base'>{data.vote_average === 0 ? 'N/A' : data.vote_average.toFixed(1)}/10</p>
                                         </div>
 
                                     </div>
-                                    <div className={`flex gap-2 w-full ${screenSize.width < 700 && 'flex-warp'}`}>
-                                        {handleGenre(data).map(genre =>
-                                            <div className={`border border-[#F6F7EB] rounded-full  ${screenSize.width < 700 ? 'py-3 px-3' : 'py-3 px-5'}`}>
-                                                <p className={`text-[#F6F7EB] font-bold ${screenSize.width < 700 && 'text-xs'} `}> {genre}</p>
-                                            </div>
+                                    <div className={`flex gap-2 w-full flex-warp`}>
+                                        {handleGenre(data).slice(0, 4).map(genre =>
+                                            <AnimatedButton
+                                                genreName={genre}
+                                                specialStyle={{
+                                                    backgroundColor: '#d4d4d4'
+                                                }}
+                                            />
                                         )}
                                     </div>
                                     <div className={`${screenSize.width < 700 ? 'w-full text-justify' : 'w-[60%] text-justify'}`}>
-                                        <p className={`text-white line-clamp-3 ${screenSize.width < 700 ? '' : 'text-xl'}`}>{data.overview}</p>
+                                        <p className={`text-white line-clamp-3 ${screenSize.width < 700 ? '' : 'text-base'}`}>{data.overview === ''? 'Not Available' : data.overview}</p>
                                     </div>
                                     <div className='w-full'>
                                         <Link
                                             to={`movies/${data.id}`}
-                                            state={'movie'}
+                                            state={type}
                                         >
-                                            <button className={`px-8 py-3 font-medium bg-cyan-500 text-white w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] rounded-xl ${screenSize.width < 700 ? 'text-sm' : 'text-lg'}`}>
-                                                See more
-                                            </button>
+                                            <AnimatedButton
+                                                genreName={'See more'}
+                                                specialStyle={{
+                                                    backgroundColor: '#e5e5e5',
+                                                    width: 6 + 'rem',
+                                                    height: 3 + 'rem'
+                                                }}
+                                            />
                                         </Link>
                                     </div>
                                 </div>
@@ -169,7 +178,7 @@ const Images = ({ imgs, type }) => {
                                     <img
                                         src={`https://image.tmdb.org/t/p/w1280/${data.poster_path}`}
                                         alt="poster"
-                                        className="h-[30rem] w-[20rem] rounded-xl"
+                                        className="h-[25rem] w-[18rem] rounded-xl"
                                     />
                                 </div>
                             </motion.div>
@@ -183,14 +192,13 @@ const Images = ({ imgs, type }) => {
 
 const Dots = ({ imgIndex, setImgIndex, imgs }) => {
     return (
-        <div className="relative bottom-[5rem] flex w-full justify-center gap-2">
+        <div className="relative bottom-[2rem] flex w-full justify-center gap-2">
             {imgs.results.map((_, idx) => {
                 return (
                     <button
                         key={idx}
                         onClick={() => setImgIndex(idx)}
-                        className={`h-3 w-3 rounded-full transition-colors ${idx === imgIndex ? "bg-neutral-50" : "bg-neutral-500"
-                            }`}
+                        className={`h-3 w-3 rounded-full transition-colors ${idx === imgIndex ? "bg-neutral-50" : "bg-neutral-500"}`}
                     />
                 );
             })}

@@ -1,129 +1,77 @@
-import { motion } from "framer-motion";
-import { FiArrowRight } from "react-icons/fi";
-import action from '../../assets/Categories/action.jpg'
-import animation from '../../assets/Categories/animation.jpg'
-import comedy from '../../assets/Categories/comedy.jpg'
-import crime from '../../assets/Categories/crime.jpg'
-import documentary from '../../assets/Categories/documentary.jpg'
-import drama from '../../assets/Categories/drama.jpg'
-import {Link} from 'react-router-dom'
+import React from "react";
+import { Link } from 'react-router-dom'
 
-const ColorChangeCards = ({ type }) => {
+const HoverDevCards = ({ type }) => {
     return (
-        <div className="h-full w-full ">
-            <div className="flex flex-wrap justify-center items-center gap-3">
-                <Link
-                    to={`allMovies`}
-                    state={[{ genreName: 'action', type: type, genre: type === 'movie' ? 28 : 10759 }]}
-                >
-                    <Card
-                        heading="Action"
-                        imgSrc={action}
-                    />
-                </Link>
-                <Link
-                    to={`allMovies`}
-                    state={[{ genreName: 'animation', type: type, genre: 16 }]}
-                >
-                    <Card
-                        heading="Animation"
-                        imgSrc={animation}
-                    />
-                </Link>
-                <Link
-                    to={`allMovies`}
-                    state={[{ genreName: 'comedy', type: type, genre: 35 }]}
-                >
-                    <Card
-                        heading="Comedy"
-                        imgSrc={comedy}
-                    />
-                </Link>
-                <Link
-                    to={`allMovies`}
-                    state={[{ genreName: 'crime', type: type, genre: 80 }]}
-                >
-                    <Card
-                        heading="Crime"
-                        imgSrc={crime}
-                    />
-                </Link>
-                <Link
-                    to={`allMovies`}
-                    state={[{ genreName: 'documentary', type: type, genre: 99 }]}
-                >
-                    <Card
-                        heading="Documentary"
-                        imgSrc={documentary}
-                    />
-                </Link>
-                <Link
-                    to={`allMovies`}
-                    state={[{ genreName: 'drama', type: type, genre: 18 }]}
-                >
-                    <Card
-                        heading="Drama"
-                        imgSrc={drama}
-                    />
-                </Link>
+        <div className="flex flex-col px-[3%] py-[2%] gap-4">
+            <div>
+                <p className="font-bold text-white text-2xl">Categories</p>
+            </div>
+            <div className="flex justify-evenly items-center gap-2">
+                <Card
+                    title="Action"
+                    href="AllMovies"
+                    genreName={'action'}
+                    type={type}
+                    genre={type === 'movie' ? 28 : 10759}
+                />
+                <Card
+                    title="Animation"
+                    href="AllMovies"
+                    genreName={'animation'}
+                    type={type}
+                    genre={16}
+                />
+                <Card
+                    title="Comedy"
+                    href="AllMovies"
+                    genreName={'comedy'}
+                    type={type}
+                    genre={35}
+                />
+                <Card
+                    title="Crime"
+                    href="AllMovies"
+                    genreName={'crime'}
+                    type={type}
+                    genre={80}
+                />
+                <Card
+                    title="Documentary"
+                    href="AllMovies"
+                    genreName={'documentary'}
+                    type={type}
+                    genre={99}
+                />
+                <Card
+                    title="Drama"
+                    href="AllMovies"
+                    genreName={'drama'}
+                    type={type}
+                    genre={18}
+                />
             </div>
         </div>
     );
 };
 
-const Card = ({ heading, description, imgSrc }) => {
+const Card = ({ title, subtitle, icon, genreName, type, genre, href }) => {
     return (
-        <motion.div
-            transition={{
-                staggerChildren: 0.035,
-            }}
-            whileHover="hover"
-            className="w-[12.5rem] h-[12.5rem] bg-slate-300 overflow-hidden cursor-pointer group relative rounded-xl"
+        <Link
+            to={href}
+            state={[{ genreName: genreName, type: type, genre: genre }]}
+            className="w-full p-4 rounded border-[1px] border-slate-300 relative overflow-hidden group bg-neutral-950 flex justify-center items-center"
         >
-            <div
-                className="absolute inset-0 saturate-0 md:saturate-0 md:group-hover:saturate-100 group-hover:scale-110 transition-all duration-500"
-                style={{
-                    backgroundImage: `url(${imgSrc})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                }}
-            />
-            <div className="p-4 relative z-20 h-full text-slate-300 group-hover:text-white  transition-colors duration-500 flex flex-col justify-between">
-                <FiArrowRight className="text-3xl group-hover:-rotate-45 transition-transform duration-500 ml-auto" />
-                <div>
-                    <h4>
-                        {heading.split("").map((l, i) => (
-                            <ShiftLetter letter={l} key={i} />
-                        ))}
-                    </h4>
-                </div>
-            </div>
-        </motion.div>
+            <div className="absolute inset-0 bg-gradient-to-r from-neutral-600 to-neutral-800 translate-y-[100%] group-hover:translate-y-[0%] transition-transform duration-300" />
+
+            <h3 className="font-medium text-lg text-white relative z-10 duration-300">
+                {title}
+            </h3>
+            <p className="text-slate-400 group-hover:text-violet-200 relative z-10 duration-300">
+                {subtitle}
+            </p>
+        </Link>
     );
 };
 
-const ShiftLetter = ({ letter }) => {
-    return (
-        <div className="inline-block overflow-hidden h-[36px] font-semibold text-2xl">
-            <motion.span
-                className="flex flex-col min-w-[4px]"
-                style={{
-                    y: "0%",
-                }}
-                variants={{
-                    hover: {
-                        y: "-50%",
-                    },
-                }}
-                transition={{
-                    duration: 0.5,
-                }}
-            >
-                <span>{letter}</span>
-                <span>{letter}</span>
-            </motion.span>
-        </div>
-    );
-};
-
-export default ColorChangeCards;
+export default HoverDevCards;

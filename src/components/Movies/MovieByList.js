@@ -20,7 +20,6 @@ const MovieByList = ({ slidesPerView, spaceBetween, list, type, handleGenre }) =
             <p className={`pb-[1%] text-white text-2xl capitalize ${screenSize.width < 700 ? 'text-base' : 'text-2xl'} `}>{list.replaceAll('_', ' ')} {type}</p>
             <p className={`pb-[1%] text-slate-400 ${screenSize.width < 700 ? 'text-sm' : 'text-xl'}`}>Explore diverse movie categories, from action to drama and everything in between</p>
 
-
             <Swiper
                 className={`${screenSize.width < 700 ? 'h-[20rem]' : 'h-[25rem]'} w-full`}
                 slidesPerView={slidesPerView}
@@ -61,13 +60,13 @@ const MovieByList = ({ slidesPerView, spaceBetween, list, type, handleGenre }) =
                     // popular movies
                     movieByList.results.filter((movie, key) => movie.backdrop_path !== null).map((movie, index) => (
                         <>
-                            <SwiperSlide key={index} className=''>
-                                <Link to={`/movies/${movie.id}`} state={type}>
+                            <SwiperSlide key={index} >
+                                <Link to={`/movies/${movie.id}`} state={type} >
                                     <div
-                                      style={{
+                                        style={{
                                             backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}')`
                                         }}
-                                        className='h-full w-full gap-1 rounded-lg bg-no-repeat bg-cover bg-center'
+                                        className='h-full w-full gap-1 rounded-lg bg-no-repeat bg-cover bg-center '
                                     >
                                         <div className='h-full w-full flex flex-col items-start hover:bg-[rgb(0,0,0,0.5)] justify-end rounded-lg p-[3%]'>
                                             <p className='text-white font-bold'>{movie.title || movie.name}</p>

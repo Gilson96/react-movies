@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { EyeIcon, HeartIcon } from '@heroicons/react/24/outline'
-import { Alert, AlertIcon } from '@chakra-ui/react'
 import useScreenSize from '../../features/useScreenSize'
 import { useParams } from 'react-router-dom'
 import { useGetAccountDetailsQuery } from '../../features/Account/accountApi';
-import { Tooltip } from '@chakra-ui/react'
-const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, addToRated, eyeIcon, heartIcon, starIcon, movieDetails }) => {
+import AnimatedButton from '../AnimatedUI/AnimatedButton'
+
+const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, movieDetails }) => {
     const { data: account = [], isLoading } = useGetAccountDetailsQuery()
     const { movieId } = useParams()
     const screenSize = useScreenSize()
@@ -14,6 +13,7 @@ const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, addToRated, eyeIco
     const newMovieDetails = { id: Math.floor(Math.random() * 101), movieDetails }
 
     if (isLoading) return <p>Loading</p>
+
     const handleIfMovieExistInWatchlist = () => {
         let movieExist = []
 
@@ -39,9 +39,9 @@ const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, addToRated, eyeIco
     }
 
     return (
-        <div>
-            <div className='flex gap-5 mr-2'>
-                {watchlistFeedback &&
+
+        <div className='w-full h-full flex justify-between items-end'>
+            {/* {watchlistFeedback &&
                     <div className='absolute w-[30%] right-1'>
                         <Alert status='success' className='rounded-xl'>
                             <AlertIcon />
@@ -56,52 +56,95 @@ const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, addToRated, eyeIco
                             Your movie was added to the Favourites sucessfully! Refresh to see the magic
                         </Alert>
                     </div>
+                } */}
+
+            <div
+                className={`h-[57px] border w-1/2 border-neutral-700 bg-neutral-800 flex justify-center items-center`}
+                onClick={() => {
+                    return !handleIfMovieExistInWatchlist().includes('exist') &&
+                        <>
+                            {addToWatchlist({ id: 1, body: newMovieDetails })}
+                            {setWatchlistFeedback(true)}
+                        </>
                 }
-                <Tooltip label={!handleIfMovieExistInWatchlist().includes('exist') ? 'Add to Watchlist' : 'Watchlisted'} aria-label='A tooltip'>
-                    <div
-                        className={` justify-center items-center ${!handleIfMovieExistInWatchlist().includes('exist') ? 'cursor-pointer' : ''} ${screenSize.width < 700 ? 'flex flex-row w-[50%] border p-2 rounded-lg gap-1' : 'flex flex-col'}`}
-                        onClick={() => {
-                            return !handleIfMovieExistInWatchlist().includes('exist') ?
-                                <>
-                                    {addToWatchlist({ id: 1, body: newMovieDetails })}
-                                    {setWatchlistFeedback(true)}
-                                </>
-                                :
-                                ''
+                }
+            >
+                {handleIfMovieExistInWatchlist().includes('exist') ?
+                    <AnimatedButton
+                        specialStyle={{
+                            border: 'none',
+                            width: 100 + '%',
+                            height: 100 + '%',
+                            display: 'flex',
+                            justifyContent: 'justify-center',
+                            alignItems: 'center',
+                            borderRadius: 0,
+                            backgroundColor: '#d4d4d4',
+                            color: '#404040',
+                            borderRight: 0.25 + 'px solid #404040'
+
                         }}
-                    >
-                        {handleIfMovieExistInWatchlist().includes('exist') ?
-                            <EyeIcon className='h-10 w-10 fill-green-400' />
-                            :
-                            <EyeIcon className='h-10 w-10 text-green-400 hover:text-green-500 hover:fill-green-400' />
-                        }
-
-                        <p className='text-white font-semibold'>{!handleIfMovieExistInWatchlist().includes('exist') ? 'Watchlist' : 'Watchlisted'}</p>
-                    </div>
-                </Tooltip>
-
-                <Tooltip label={!handleIfMovieExistInFavourites().includes('exist') ? 'Add to Favourites' : 'Favourited'} aria-label='A tooltip'>
-                    <div
-                        className={`justify-center items-center ${!handleIfMovieExistInFavourites()[0] ? 'cursor-pointer' : ''} ${screenSize.width < 700 ? 'flex flex-row w-[50%] border p-2 rounded-lg gap-1' : 'flex flex-col'}`}
-                        onClick={() => {
-                            return !handleIfMovieExistInFavourites()[0] ?
-                                <>
-                                    {addToFavourite({ id: 1, body: newMovieDetails })}
-                                    {setFavouriteFeedback(true)}
-                                </>
-                                :
-                                ''
+                        genreName={'Watchlisted'}
+                    />
+                    :
+                    <AnimatedButton
+                        specialStyle={{
+                            border: 'none',
+                            width: 100 + '%',
+                            height: 100 + '%',
+                            display: 'flex',
+                            justifyContent: 'justify-center',
+                            alignItems: 'center',
+                            borderRadius: 0,
                         }}
-                    >
-                        {handleIfMovieExistInFavourites()[0] ? <HeartIcon
-                            className='h-10 w-10 fill-red-400' /> : <HeartIcon
-                            className='h-10 w-10 text-red-400 hover:text-red-500 hover:fill-red-400'
-                        />}
-
-                        <p className='text-white font-semibold'>{!handleIfMovieExistInFavourites()[0] ? 'Favourite' : 'Favourited'}</p>
-                    </div>
-                </Tooltip>
+                        genreName={'Add to Watchlist'}
+                    />
+                }
             </div>
+
+            <div
+                className={`h-[57px] border w-1/2 border-neutral-700 bg-neutral-800 flex justify-center items-center`}
+                onClick={() => {
+                    return !handleIfMovieExistInFavourites().includes('exist') &&
+                        <>
+                            {addToFavourite({ id: 1, body: newMovieDetails })}
+                            {setFavouriteFeedback(true)}
+                        </>
+                }
+                }
+            >
+                {handleIfMovieExistInFavourites().includes('exist') ?
+                    <AnimatedButton
+                        specialStyle={{
+                            border: 'none',
+                            width: 100 + '%',
+                            height: 100 + '%',
+                            display: 'flex',
+                            justifyContent: 'justify-center',
+                            alignItems: 'center',
+                            borderRadius: 0,
+                            backgroundColor: '#d4d4d4',
+                            color: '#404040',
+                            borderLeft: 0.25 + 'px solid #404040'
+                        }}
+                        genreName={'Favourited'}
+                    />
+                    :
+                    <AnimatedButton
+                        specialStyle={{
+                            border: 'none',
+                            width: 100 + '%',
+                            height: 100 + '%',
+                            display: 'flex',
+                            justifyContent: 'justify-center',
+                            alignItems: 'center',
+                            borderRadius: 0
+                        }}
+                        genreName={'Add to Favourites'}
+                    />
+                }
+            </div>
+
         </div>
     )
 }

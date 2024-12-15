@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline'
 import { Link, useParams, useLocation } from "react-router-dom";
-import { Alert, AlertIcon } from '@chakra-ui/react'
+import { Alert, AlertIcon, Tooltip } from '@chakra-ui/react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { useRemoveWatchlistMoviesMutation, useRemoveFavouriteMoviesMutation, useGetAccountDetailsQuery } from '../../features/Account/accountApi'
 import useScreenSize from '../../features/useScreenSize'
@@ -20,7 +20,7 @@ const MyMovies = () => {
 
     console.log(account)
     return (
-        <div className={`flex flex-col w-full h-screen p-[2%]`}>
+        <div className={`flex flex-col w-full min-h-screen p-[2%]`}>
             <>
                 <div className='flex justify-between text-white'>
                     <p className={`text-white font-bold mt-[1%] ${screenSize.width < 700 ? 'text-lg' : 'text-2xl'} `}>My Movies</p>
@@ -37,7 +37,7 @@ const MyMovies = () => {
                     </div>
 
                     {/* Watchlist and favourites toggle */}
-                    <Toggle isActive={isActive} setIsActive={setIsActive}/>
+                    <Toggle isActive={isActive} setIsActive={setIsActive} />
                 </div>
 
                 {/* Watchlist Movies */}
@@ -63,8 +63,10 @@ const MyMovies = () => {
                                                 </Alert>
                                             </div>
                                         }
+
+                                        {/* movies */}
                                         <div className={`w-full h-full flex items-start`}>
-                                            <Link to={`/movies/${movie.movieDetails.id}`} state={state= (movie.movieDetails.runtime ? 'movie' : 'tv')}>
+                                            <Link to={`/movies/${movie.movieDetails.id}`} state={state = (movie.movieDetails.runtime ? 'movie' : 'tv')}>
                                                 <div
                                                     style={{
                                                         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.movieDetails.backdrop_path}')`
@@ -73,17 +75,18 @@ const MyMovies = () => {
                                                 >
                                                     <div className='h-full w-full flex flex-col items-start hover:bg-[rgb(0,0,0,0.5)] justify-end rounded-lg p-[3%]'>
                                                         <p className={`${screenSize.width < 700 && 'text-xs'} text-white font-bold`}>{movie.movieDetails.title || movie.movieDetails.name}</p>
-
                                                     </div>
                                                 </div>
                                             </Link>
-                                            <XMarkIcon
-                                                className={`h-5 w-5 relative ${screenSize.width < 700 ? 'top-[1%]' : 'top-[1%]'}  text-red-300 cursor-pointer`}
-                                                onClick={() => {
-                                                    removeMoviefromWatchlist({ id: 1, movieId: movie.id })
-                                                    setWatchlistFeedback(true)
-                                                }}
-                                            />
+                                            <Tooltip label='Remove'>
+                                                <XMarkIcon
+                                                    className={`h-5 w-5 relative ${screenSize.width < 700 ? 'top-[1%]' : 'top-[1%]'}  text-red-300 cursor-pointer hover:text-red-500`}
+                                                    onClick={() => {
+                                                        removeMoviefromWatchlist({ id: 1, movieId: movie.id })
+                                                        setWatchlistFeedback(true)
+                                                    }}
+                                                />
+                                            </Tooltip>
                                         </div>
                                     </div>
                                 ))}
@@ -106,7 +109,7 @@ const MyMovies = () => {
                                             </div>
                                         }
                                         <div className={`w-full h-full flex items-start`}>
-                                            <Link to={`/movies/${movie.movieDetails.id}`} state={state= (movie.movieDetails.runtime ? 'movie' : 'tv')}>
+                                            <Link to={`/movies/${movie.movieDetails.id}`} state={state = (movie.movieDetails.runtime ? 'movie' : 'tv')}>
                                                 <div
                                                     style={{
                                                         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.movieDetails.backdrop_path}')`

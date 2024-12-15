@@ -99,15 +99,15 @@ const FlyoutNav = ({ setIsActive, isActive, setShowSearch, onOpen, setType, type
 
   return (
     <nav
-      className={`fixed top-0 z-50 w-full px-6 text-white 
-      transition-all duration-300 ease-out lg:px-12
+      className={`fixed -top-1 z-50 w-full px-6 text-white 
+      transition-all duration-300 ease-out
       ${scrolled
           ? "bg-neutral-950 py-5 shadow-xl"
           : "bg-neutral-950/0 py-6 shadow-none"
         }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between">
-        <div className='flex w-full h-[2rem] justify-between items-center py-[2%]'>
+        <div className='flex w-full h-[2rem] justify-between items-center '>
           <div className={`flex w-auto h-auto justify-center items-center gap-2 `}>
             <p className={`${screenSize.width < 700 && 'hidden' } text-white font-bold text-3xl `}>React-Movies</p>
             <FilmIcon className={`h-12 w-12 text-white`} />
