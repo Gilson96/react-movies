@@ -56,9 +56,17 @@ const CardCarousel = ({ type }) => {
                 <div className="px-[3%]">
                     <div className="flex items-center justify-between pb-[1%]">
                         <div className="w-full h-full flex justify-between items-center gap-2">
-                            <p className={`w-full text-white text-2xl capitalize font-bold ${screenSize.width < 700 ? 'text-base' : 'text-2xl'} `}>{isActive.replaceAll('_', ' ')} {type}</p>
-                            <div className="h-full w-full justify-end items-center flex gap-12">
+
+                            {/* title */}
+                            <p className={`w-full text-white text-2xl capitalize font-bold ${screenSize.width < 700 && 'hidden'} `}>{isActive.replaceAll('_', ' ')} {type}</p>
+
+                            {/* top carousel wrapper */}
+                            <div className={`${screenSize.width > 700 ?  'h-full w-full justify-end items-center flex gap-12' : 'w-full flex justify-between pl-[2%]'}`}>
+
+                                {/* drop down menu (ex. popular, upcoming movies...)  */}
                                 <AnimatedDropDown setIsActive={setIsActive} isActive={isActive} />
+
+                                {/* carousel arrows */}
                                 <div>
                                     <button
                                         className={`rounded-lg border-[1px] border-neutral-400 bg-white p-1.5 text-2xl transition-opacity ${CAN_SHIFT_LEFT ? "" : "opacity-30"
@@ -76,10 +84,11 @@ const CardCarousel = ({ type }) => {
                                     >
                                         <FiArrowRight />
                                     </button>
-                                </div>
+                                </div>                             
                             </div>
                         </div>
                     </div>
+                    
                     <motion.div
                         animate={{
                             x: offset,
@@ -153,7 +162,6 @@ const Post = ({ imgUrl, author, title, description, list, year, movie, type }) =
                         className='h-full w-full transition-all animate__animated animate__fadeInUp animate__faster flex flex-col justify-center items-center gap-2'
                     >
                         <p className='text-white w-full text-center text-2xl font-bold'>{movie.title || movie.name}<span> &#8226; {type === 'movie' && '(' + movie.release_date.slice(0, 4) + ')'}{type === 'tv' && '(' + movie.first_air_date.slice(0, 4) + ')'}</span></p>
-
 
                         <div className="w-full flex justify-center items-center p-[2%] ">
                             <AnimatedButton genreName={'More Details'} specialStyle={{

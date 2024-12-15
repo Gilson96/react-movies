@@ -9,10 +9,11 @@ import NavBar from './AnimatedUI/Navbar'
 import Categories from './AnimatedUI/CategoriesCard'
 import CardCarousel from './AnimatedUI/CardCarousel'
 import CategoriesNew from '../components/CategoriesNew'
+import MobileCardCarousel from './UI/MobileCardCarousel'
 
 const Dashboard = () => {
   const [type, setType] = useState('movie')
-  const screeenSize = useScreenSize()
+  const screenSize = useScreenSize()
   const { data: trendingMovies = [], isLoading } = useGetTrendingMoviesQuery(type)
 
   return (
@@ -20,25 +21,30 @@ const Dashboard = () => {
 
       <NavBar setIsActive={setType} isActive={type} />
 
-      
-       { isLoading ?
+      {screenSize.width > 700 ?
+        (isLoading ?
           <HeroCarouselFallback />
           :
-          <SwipeCarousel type={type} data={trendingMovies} />}
-        
-        {/* isLoading ?
+          <SwipeCarousel type={type} data={trendingMovies} />
+        )
+        :
+        (isLoading ?
           <HeroSectionFallback />
           :
-          <HeroSection type={type} data={trendingMovies}/>
-       */}
+          <HeroSection type={type} data={trendingMovies} />
+        )
+      }
 
-      {screeenSize.width > 700 ?
+      {screenSize.width > 700 ?
         <div className='h-full w-full flex flex-col'>
           <Categories type={type} />
           <CardCarousel list={'popular'} type={type} />
         </div>
         :
-        <CategoriesNew type={type} />
+        <div>
+          <CategoriesNew type={type} />
+          <MobileCardCarousel type={type} />
+        </div>
       }
     </div >
   )

@@ -4,7 +4,7 @@ import { useGetMovieGenreListQuery } from '../../features/Movies/moviesByGenreAp
 import useScreenSize from "../../features/useScreenSize";
 import { StarIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
-import { SkeletonCircle, SkeletonText, Box } from '@chakra-ui/react'
+import { SkeletonText, Box } from '@chakra-ui/react'
 import AnimatedButton from './AnimatedButton'
 
 const ONE_SECOND = 1000;
