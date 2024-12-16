@@ -51,7 +51,12 @@ const Right = ({ movieDetails, type }) => {
         {
             content: (
                 <>
-                    <MovieRecommendations type={type} movieId={movieDetails.id} genres={movieDetails.genres} />
+                    <MovieRecommendations
+                        type={type}
+                        movieId={movieDetails.id}
+                        slidesPerView={2.5}
+                        spaceBetween={30}
+                    />
                 </>
             ),
         },

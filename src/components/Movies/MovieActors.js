@@ -21,10 +21,10 @@ const MovieActors = ({ movieId, slidesPerView, modules, spaceBetween, type, scre
                     <SkeletonCircle size='20' />
                 </Box>
                 :
-                <div className={`w-full h-full flex flex-col justify-center items-center  gap-4 'relative -top-[26rem]`}>
+                <div className={`w-full h-full flex flex-col justify-center items-center gap-4 relative -top-[26rem]`}>
 
                     {/* Cast */}
-                    <div>
+                    <div className='w-full'>
                         <div className='w-full flex justify-between pb-[1%] items-center'>
                             <h1 className='text-xl text-neutral-500 `'>Actors:</h1>
                         </div>
@@ -47,7 +47,7 @@ const MovieActors = ({ movieId, slidesPerView, modules, spaceBetween, type, scre
                     </div>
 
                     {/* crew */}
-                    <div className>
+                    <div className='w-full'>
                         <div className='w-full flex justify-between pb-[1%] items-center'>
                             <h1 className='text-xl text-neutral-500 `'>Production:</h1>
                         </div>

@@ -49,6 +49,7 @@ const MobileCardCarousel = ({ type }) => {
                 <MovieByList
                     list={isActive}
                     type={type}
+                    slidesPerView={1.8}
                 />
             }
         </div>

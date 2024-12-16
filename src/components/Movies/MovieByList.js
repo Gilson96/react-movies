@@ -14,7 +14,7 @@ const MovieByList = ({ slidesPerView, spaceBetween, list, type, handleGenre }) =
         <>
             <Swiper
                 className='h-[18rem] w-full'
-                slidesPerView={1.5}
+                slidesPerView={slidesPerView}
             >
                 {isLoading ?
                     // movies skeleton

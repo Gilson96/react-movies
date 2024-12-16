@@ -12,9 +12,7 @@ import { RxHand } from "react-icons/rx";
 
 const MovieRecommendations = ({ movieId, slidesPerView, type, spaceBetween }) => {
     const [mouseHover, setMouseHover] = useState()
-    let { movie_id } = useParams();
-    let { state } = useLocation();
-    const { data: movieRecommendations = [], isLoading } = useGetMovieRecommendationsQuery(({ id: (parseInt(movieId || parseInt(movie_id))), type: (type || state) }))
+    const { data: movieRecommendations = [], isLoading } = useGetMovieRecommendationsQuery(({ id: (parseInt(movieId)), type: type }))
     const screenSize = useScreenSize()
     console.log(movieRecommendations)
 
@@ -69,52 +67,40 @@ const MovieRecommendations = ({ movieId, slidesPerView, type, spaceBetween }) =>
                                             alignItems: 'center',
 
                                         }}
-
                                     >
-                                        <Link key={index} to={`/movies/${movie.id}`} state={type || state}>
-                                            <div
-                                                onMouseOver={() => setMouseHover(movie.id)}
-                                                onMouseLeave={() => setMouseHover(false)}
-                                                className={`flex flex-col h-[20rem] w-[12rem] items-start justify-end gap-1 rounded-lg bg-[url(https://image.tmdb.org/t/p/w1280/${movie.poster_path})]  bg-center bg-no-repeat bg-cover`}
-                                            >
-                                                {mouseHover === movie.id ?
-                                                    <div
-                                                        style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))` }}
-                                                        className='h-full w-full transition-all animate__animated animate__fadeInUp animate__faster flex flex-col justify-center items-center gap-2'
-                                                    >
-                                                        <p className='text-white w-full text-center text-2xl font-bold'>{movie.title || movie.name}</p>
-                                                        <div className='flex flex-col gap-1'>
-                                                            <div className='flex gap-1 items-center'>
-                                                                <i><StarIcon className='w-5 h-5 text-yellow-400 ' /></i>
-                                                                <p className='text-white text-sm'>{movie.vote_average.toFixed(1)}/10</p>
-                                                                <p className='text-white text-sm'>&#8226;
-                                                                    {type === 'movie' && movie.release_date.slice(0, 4)}
-                                                                    {type === 'tv' && movie.first_air_date.slice(0, 4)}
-                                                                </p>
-                                                            </div>
-                                                            <div className="w-full flex justify-center items-center p-[2%]">
+                                        <div
+                                            onMouseOver={() => setMouseHover(movie.id)}
+                                            onMouseLeave={() => setMouseHover(false)}
+                                            className={`flex flex-col h-[20rem] w-[12rem] items-start justify-end gap-1 rounded-lg bg-[url(https://image.tmdb.org/t/p/w1280/${movie.poster_path})]  bg-center bg-no-repeat bg-cover`}
+                                        >
+                                            {mouseHover === movie.id &&
+                                                <div
+                                                    style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))` }}
+                                                    className='h-full w-full transition-all animate__animated animate__fadeInUp animate__faster flex flex-col justify-center items-center gap-2'
+                                                >
+                                                    <p className='text-white w-full text-center text-2xl font-bold'>{movie.title || movie.name}</p>
+                                                    <div className='flex flex-col gap-1'>
+                                                        <div className='flex gap-1 items-center'>
+                                                            <i><StarIcon className='w-5 h-5 text-yellow-400 ' /></i>
+                                                            <p className='text-white text-sm'>{movie.vote_average.toFixed(1)}/10</p>
+                                                            <p className='text-white text-sm'>&#8226;
+                                                                {type === 'movie' && movie.release_date.slice(0, 4)}
+                                                                {type === 'tv' && movie.first_air_date.slice(0, 4)}
+                                                            </p>
+                                                        </div>
+                                                        <div className="w-full flex justify-center items-center p-[2%]">
+                                                            <Link key={index} to={`/movies/${movie.id}`} state={type}>
                                                                 <AnimatedButton genreName={'More Details'} specialStyle={{
                                                                     backgroundColor: '#a3a3a3',
                                                                     color: '#404040',
                                                                     fontSize: 0.6 + 'rem'
                                                                 }} />
-                                                            </div>
+                                                            </Link>
                                                         </div>
-
                                                     </div>
-                                                    :
-                                                    <div>
-
-                                                    </div>
-                                                }
-                                                {/* 
-                                                    <div className='flex gap-1'>
-                                                        
-                                                    </div> */}
-                                            </div>
-                                        </Link>
-
-
+                                                </div>
+                                            }
+                                        </div>
                                     </SwiperSlide >
                                 </>
                             ))}

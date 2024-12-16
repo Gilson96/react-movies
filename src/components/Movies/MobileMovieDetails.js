@@ -137,7 +137,6 @@ const MobileMovieDetails = ({ movieDetails, type }) => {
                 <MovieRecommendations
                     movieId={movieDetails.id}
                     type={type}
-                    screenSize={screenSize}
                     slidesPerView={1.5}
                     spaceBetween={30}
                 />
