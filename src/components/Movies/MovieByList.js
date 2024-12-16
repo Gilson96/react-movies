@@ -49,10 +49,12 @@ const MovieByList = ({ slidesPerView, spaceBetween, list, type, handleGenre }) =
                     // popular movies
                     movieByList.results.filter((movie, key) => movie.backdrop_path !== null).map((movie, index) => (
                         <>
-                            <SwiperSlide
-                                key={index}
-                            >
-                                <Link to={`/movies/${movie.id}`} state={type} >
+                            <SwiperSlide>
+                                <Link
+                                    key={index}
+                                    to={`/movies/${movie.id}`}
+                                    state={type}
+                                >
                                     <div className='flex flex-col gap-1 rounded-lg'>
                                         <div className={`h-[15rem] w-[10rem] rounded-xl bg-[url(https://image.tmdb.org/t/p/w1280/${movie.poster_path})] bg-center bg-no-repeat bg-cover`}>
                                         </div>

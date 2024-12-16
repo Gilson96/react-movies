@@ -51,8 +51,8 @@ const MobileHeroSwiper = ({ data, type, setIsActive, isActive, handleGenre }) =>
                     }}
                 >
                     {data.results.map((data, index) => (
-                        <SwiperSlide key={index} className='flex justify-center items-center'>
-                            <div className='flex w-full h-full justify-center items-center '>
+                        <SwiperSlide  className='flex justify-center items-center'>
+                            <div key={index} className='flex w-full h-full justify-center items-center '>
                                 <div
                                     style={{
                                         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url('https://image.tmdb.org/t/p/w1280/${data.backdrop_path}')`,
