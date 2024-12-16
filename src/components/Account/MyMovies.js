@@ -139,7 +139,7 @@ const MyMovies = () => {
                                                             style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))` }}
                                                             className='h-full w-full flex flex-col justify-center items-center gap-2'
                                                         >
-                                                            <p className={`text-white w-full text-center ${screenSize.width < 700 ? 'text-sm' : 'text-xl'} font-bold`}>{movie.movieDetails.title || movie.movieDetails.name}</p>
+                                                            <p className={`text-white w-full text-center $j#{screenSize.width < 700 ? 'text-sm' : 'text-xl'} font-bold`}>{movie.movieDetails.title || movie.movieDetails.name}</p>
 
                                                             <div className="w-full flex justify-center items-center p-[2%] ">
                                                                 <AnimatedButton genreName={'More Details'} specialStyle={{
