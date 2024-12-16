@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
-import { FilmIcon } from '@heroicons/react/24/outline'
-import { useSearchMoviesQuery } from '../../features/Movies/allMoviesApi'
-import Card from '../Card'
-import SearchedMovie from '../Movies/SearchedMovie'
-import { useDisclosure } from '@chakra-ui/react'
-import Account from '../Account/Account'
-import { SkeletonText, Box } from '@chakra-ui/react'
-import useScreenSize from '../../features/useScreenSize'
-import Toggle from './Toggle'
+import { Box, useDisclosure, SkeletonText } from "@chakra-ui/react";
+import { useState } from "react";
+import useScreenSize from "../../features/useScreenSize";
+import { useSearchMoviesQuery } from "../../features/Movies/allMoviesApi";
+import ContentForAnimatedNavbar from "../UI/ContentForAnimatedNavbar";
+import ModalForSearchedMovie from '../UI/ModalForSearchedMovie'
+import Card from '../UI/Card'
 
-const Navigator = ({ setIsActive, isActive }) => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const [type, setType] = useState('movie')
+const AnimatedNavbar = ({ setIsActive, isActive }) => {
+    // state to show the search movie modal
     const [showSearch, setShowSearch] = useState(false)
+    // value from the search movie modal
     const [inputValue, setInputValue] = useState('hello')
+    // Movie or Tv
+    const [type, setType] = useState('movie')
+    // Modal option
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const screenSize = useScreenSize()
-
+    // Get searchef movie from API
     const { data: searchMovies = [], isLoading } = useSearchMoviesQuery({ title: inputValue, type: type })
 
     const handleInputValue = (e) => {
@@ -24,41 +24,16 @@ const Navigator = ({ setIsActive, isActive }) => {
     }
 
     return (
-        <div className={`h-auto w-full absolute top-0 z-30  px-[3%] backdrop-blur-sm`}>
+        <>
+            <ContentForAnimatedNavbar setIsActive={setIsActive} isActive={isActive} setShowSearch={setShowSearch} type={type} setType={setType} onOpen={onOpen} screenSize={screenSize} />
 
-            <div className='flex w-full h-[4rem] justify-between items-center'>
-                <div className='flex w-auto h-auto justify-center items-center gap-2 '>
-                    <p className='text-white font-bold text-3xl'>React-Movies</p>
-                    <FilmIcon className={`h-12 w-12 text-white`} />
-                </div>
+            <div className="relative">
+                <div className="absolute inset-0 z-0 bg-gradient-to-b from-neutral-950/90 to-neutral-950/0" />
+            </div>
 
-                <div className={`flex justify-between items-center border rounded-full pl-[2%] pr-[5px] bg-slate-950 h-[3.2rem]`}>
-                    
-                    <div
-                            className={`flex justify-center items-center text-slate-400 cursor-pointer w-[5rem]`}
-                            onClick={() => { setIsActive('movie'); setType('movie') }}
-                        >
-                            <p className={`${type === 'movie' ? 'text-white' : ''}`}>Movies</p>
-                        </div>
-                        <div
-                            className={`flex justify-center items-center text-slate-400 cursor-pointer w-[5rem]`}
-                            onClick={() => { setIsActive('tv'); setType('tv') }}
-                        >
-                            <p className={`${type === 'tv' ? 'text-white' : ''}`}>Series</p>
-                        </div>
-                    <i
-                        className={`bg-slate-700 flex justify-center items-center w-[2.5rem] h-[2.5rem] rounded-full cursor-pointer`}
-                        onClick={() => { setShowSearch(true); onOpen(); }}
-                    >
-                        <MagnifyingGlassIcon className='w-4 h-4 text-white' />
-                    </i>
-                </div>
-
-                <Account />
-            </div >
-
+            {/* If showSearch is true open Modal */}
             {showSearch &&
-                <SearchedMovie
+                <ModalForSearchedMovie
                     onOpen={onOpen}
                     isOpen={isOpen}
                     onClose={onClose}
@@ -77,6 +52,7 @@ const Navigator = ({ setIsActive, isActive }) => {
                         <div className='flex flex-wrap h-full w-full justify-center items-center gap-2'>
 
                             {isLoading ?
+                                // Fallback
                                 <>
                                     <Box padding='6' boxShadow='lg' className='w-[15rem] h-[20rem] rounded-3xl border'>
                                         <SkeletonText mt='4' noOfLines={10} spacing='4' skeletonHeight='2' />
@@ -97,20 +73,18 @@ const Navigator = ({ setIsActive, isActive }) => {
                                 :
                                 searchMovies.results.filter(movie => movie.backdrop_path !== null).map(movie =>
                                     <Card
-                                        image={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
-                                        getId={movie.id}
+                                        imgUrl={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
+                                        movie={movie}
                                         type={type}
-                                        screenSize={screenSize}
                                     />
                                 )
                             }
                         </div>
                     </div>
-                </SearchedMovie>
+                </ModalForSearchedMovie>
             }
-        </div>
-    )
-}
+        </>
+    );
+};
 
-export default Navigator
-
+export default AnimatedNavbar

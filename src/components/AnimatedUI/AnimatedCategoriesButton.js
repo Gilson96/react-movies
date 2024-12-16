@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom'
 
-const HoverDevCards = ({ type }) => {
+const AnimatedCategoriesButton = ({ type }) => {
     return (
         <div className="flex flex-col px-[3%] py-[2%] gap-4">
             <div>
@@ -55,6 +55,7 @@ const HoverDevCards = ({ type }) => {
     );
 };
 
+// The button himself
 const Card = ({ title, subtitle, icon, genreName, type, genre, href }) => {
     return (
         <Link
@@ -74,4 +75,4 @@ const Card = ({ title, subtitle, icon, genreName, type, genre, href }) => {
     );
 };
 
-export default HoverDevCards;
+export default AnimatedCategoriesButton;

@@ -11,13 +11,15 @@ const Account = ({ type, ...rest }) => {
   
   return (
     <>
-
+      
       {isLoading ?
+      // Fallback
         <div className='flex h-[3.2rem] gap-2 justify-center items-center w-[7rem]'>
           <UserCircleIcon className='h-10 w-10 text-white' />
           <BarLoader height={'h-5'} />
         </div>
         :
+        // Account button in dashboard
         <div className='flex h-[3.2rem] w-auto gap-2 justify-center items-center cursor-pointer'>
           <Link to='/movies/myMovies' state={type} className='w-full'>
             <button
@@ -30,7 +32,7 @@ const Account = ({ type, ...rest }) => {
                 <span className='flex items-center gap-2 text-xl'> <UserCircleIcon className='h-10 w-10' />My Account</span>
               }
 
-
+              {/* button animation */}
               {/* TOP */}
               <span className="absolute left-0 top-0 h-[2px] w-0 bg-neutral-300 transition-all duration-100 group-hover:w-full" />
 

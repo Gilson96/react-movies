@@ -1,21 +1,20 @@
 import React from 'react'
 import { useLocation, useParams } from 'react-router-dom';
 import { useGetMovieDetailsQuery } from '../../features/Movies/allMoviesApi';
-import MovieActors from './MovieActors';
-import MovieRecommendations from './MovieRecommendations';
-import {
-  usePostToFavouriteMoviesMutation,
-  usePostToWatchlistMoviesMutation,
-} from '../../features/Account/accountApi'
 import useScreenSize from '../../features/useScreenSize'
 import MovieDetailsHero from './MovieDetailsHero';
-import MovieDetailsHeroFallback from '../Fallback/MovieDetailsHeroFallback';
-import MobileMovieDetails from './MobileMovieDetails';
+import MobileMovieDetails from '../MobileView/MobileMovieDetails';
+import BarLoader from '../UI/BarLoader';
 
 const MovieDetails = () => {
+  // get id from url
   let { movieId } = useParams();
+  // get data from link
   let { state } = useLocation();
+  // convert id from url to a integer
+  // As it comes as a sting
   let newMovieId = parseInt(movieId)
+  // Get data from API
   const { data: movieDetails = [], isLoading } = useGetMovieDetailsQuery({ id: newMovieId, type: state })
   const screenSize = useScreenSize()
 
@@ -25,21 +24,19 @@ const MovieDetails = () => {
         {screenSize.width > 700 ?
           // Movie Details for desktop
           (isLoading ?
-            <MovieDetailsHeroFallback />
+            <BarLoader />
             :
             <MovieDetailsHero movieDetails={movieDetails} type={state} />
           )
           :
           // Movie Details for mobile
           (isLoading ?
-            <p>isLoading</p>
+            <BarLoader />
             :
             <MobileMovieDetails movieDetails={movieDetails} type={state} />
           )
         }
 
-
-      
       </>
     </div >
   )

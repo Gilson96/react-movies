@@ -2,9 +2,10 @@ import { FiChevronDown, } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-// Animated Drop down menu
+// Animated Drop down menu that is been use
+// In the Dashboard to choose between
+// popular, rated movies etc...
 const AnimatedDropDown = ({ setIsActive, isActive, type }) => {
-    console.log(type)
     const [open, setOpen] = useState(false);
 
     return (
@@ -86,9 +87,4 @@ const itemVariants = {
             when: "afterChildren",
         },
     },
-};
-
-const actionIconVariants = {
-    open: { scale: 1, y: 0 },
-    closed: { scale: 0, y: -7 },
 };

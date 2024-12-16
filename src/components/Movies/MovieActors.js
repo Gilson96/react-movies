@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react'
 import { useGetMovieActorsQuery } from '../../features/Movies/allMoviesApi'
-import { Avatar, Divider } from '@chakra-ui/react'
+import { Avatar } from '@chakra-ui/react'
 import { SkeletonCircle, Box } from '@chakra-ui/react'
 
+// Actors for desktop view
 const MovieActors = ({ movieId, slidesPerView, modules, spaceBetween, type, screenSize}) => {
     const { data: movieActors = [], isLoading } = useGetMovieActorsQuery({ id: parseInt(movieId), type: type })
 

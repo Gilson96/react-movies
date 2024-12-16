@@ -10,9 +10,9 @@ import { ListBulletIcon } from '@heroicons/react/24/solid';
 import { StarIcon } from '@heroicons/react/24/solid';
 import { useGetMovieGenreListQuery } from '../../features/Movies/moviesByGenreApi';
 import useScreenSize from '../../features/useScreenSize'
-import HeroSectionFallback from '../Fallback/HeroSectionFallback';
+import BarLoader from '../UI/BarLoader';
 
-const HeroSection = ({ data, type, setIsActive, isActive, handleGenre }) => {
+const MobileHeroSwiper = ({ data, type, setIsActive, isActive, handleGenre }) => {
     const { data: genreList = [], isLoading } = useGetMovieGenreListQuery('movie')
     const screenSize = useScreenSize()
 
@@ -36,7 +36,9 @@ const HeroSection = ({ data, type, setIsActive, isActive, handleGenre }) => {
         <div className='w-full h-full'>
 
             {isLoading ?
-                <HeroSectionFallback />
+                <div className='h-screen flex justify-center items-center'>
+                    <BarLoader height={'h-[5rem]'} />
+                </div>
                 :
                 <Swiper
                     modules={[Pagination]}
@@ -100,4 +102,4 @@ const HeroSection = ({ data, type, setIsActive, isActive, handleGenre }) => {
 
 
 
-export default HeroSection
+export default MobileHeroSwiper

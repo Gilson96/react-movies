@@ -1,19 +1,24 @@
 import { useState } from 'react'
-import useScreenSize from '../../features/useScreenSize'
 import { useParams } from 'react-router-dom'
 import { useGetAccountDetailsQuery } from '../../features/Account/accountApi';
 import AnimatedButton from '../AnimatedUI/AnimatedButton'
+import {
+    Alert,
+    AlertIcon,
+} from '@chakra-ui/react'
 
 const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, movieDetails }) => {
+    // Get data from my API
     const { data: account = [], isLoading } = useGetAccountDetailsQuery()
+    // Get id from url
     const { movieId } = useParams()
-    const screenSize = useScreenSize()
+    // state to show feedback
     const [watchlistFeedback, setWatchlistFeedback] = useState()
     const [favouriteFeedback, setFavouriteFeedback] = useState()
+    // object to add the movie into my API
     const newMovieDetails = { id: Math.floor(Math.random() * 101), movieDetails }
 
-    if (isLoading) return <p>Loading</p>
-
+    // Checks if movie exist in Watchlist
     const handleIfMovieExistInWatchlist = () => {
         let movieExist = []
 
@@ -26,6 +31,7 @@ const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, movieDetails }) =>
         return movieExist
     }
 
+    // Checks if movie exist in Favourites
     const handleIfMovieExistInFavourites = () => {
         let movieExist = []
 
@@ -41,26 +47,31 @@ const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, movieDetails }) =>
     return (
 
         <div className='w-full h-full flex justify-between items-end'>
-            {/* {watchlistFeedback &&
-                    <div className='absolute w-[30%] right-1'>
-                        <Alert status='success' className='rounded-xl'>
-                            <AlertIcon />
-                            Your movie was added to the Watchlist sucessfully! Refresh to see the magic
-                        </Alert>
-                    </div>
-                }
-                {favouriteFeedback &&
-                    <div className='absolute w-[30%] right-1'>
-                        <Alert status='success' className='rounded-xl'>
-                            <AlertIcon />
-                            Your movie was added to the Favourites sucessfully! Refresh to see the magic
-                        </Alert>
-                    </div>
-                } */}
+            {/*if true show feedback  */}
+            {watchlistFeedback &&
+                <div className='absolute w-[30%] top-0 z-[999999]'>
+                    <Alert status='success' className='rounded-xl'>
+                        <AlertIcon />
+                        <p className='text-black'>Your movie was added to the Watchlist sucessfully! Refresh
+                        </p>
+                    </Alert>
+                </div>
+            }
+            {favouriteFeedback &&
+                <div className='absolute w-[30%] top-0 z-[999999]'>
+                    <Alert status='success' className='rounded-xl'>
+                        <AlertIcon />
+                        <p className='text-black'>Your movie was added to the Favourites sucessfully! Refresh
+                        </p>
+                    </Alert>
+                </div>
+            }
 
+            {/* Wrapper */}
             <div
                 className={`h-[57px] border w-1/2 border-neutral-700 bg-neutral-800 flex justify-center items-center`}
                 onClick={() => {
+                    // if movie doesn't exist in Watchlist, add him
                     return !handleIfMovieExistInWatchlist().includes('exist') &&
                         <>
                             {addToWatchlist({ id: 1, body: newMovieDetails })}
@@ -69,6 +80,7 @@ const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, movieDetails }) =>
                 }
                 }
             >
+                {/* if exist disable the button */}
                 {handleIfMovieExistInWatchlist().includes('exist') ?
                     <AnimatedButton
                         specialStyle={{
@@ -87,6 +99,7 @@ const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, movieDetails }) =>
                         genreName={'Watchlisted'}
                     />
                     :
+                    //  if doens't exist enable the button 
                     <AnimatedButton
                         specialStyle={{
                             border: 'none',

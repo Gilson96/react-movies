@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import { useGetTrendingMoviesQuery } from '../features/Movies/moviesByGenreApi'
 import useScreenSize from '../features/useScreenSize'
-import { SwipeCarousel } from '../components/AnimatedUI/HeroCarousel'
-import HeroSection from './OldCode/HeroSection'
-import HeroSectionFallback from './Fallback/HeroSectionFallback'
-import HeroCarouselFallback from './Fallback/HeroCarouselFallback'
-import NavBar from './AnimatedUI/Navbar'
-import Categories from './AnimatedUI/CategoriesCard'
-import CardCarousel from './AnimatedUI/CardCarousel'
-import CategoriesNew from '../components/CategoriesNew'
+import AnimatedHeroSwiper from './AnimatedUI/AnimatedHeroSwiper'
+import AnimatedNavbar from './AnimatedUI/AnimatedNavbar'
+import AnimatedCategoriesButton from './AnimatedUI/AnimatedCategoriesButton'
+import AnimatedCardCarousel from './AnimatedUI/AnimatedCardCarousel'
+import MobileCategories from '../components/MobileView/MobileCategories'
 import MobileCardCarousel from './UI/MobileCardCarousel'
+import MobileHeroSwiper from './MobileView/MobileHeroSwiper'
+import BarLoader from './UI/BarLoader'
 
 const Dashboard = () => {
   const [type, setType] = useState('movie')
@@ -19,30 +18,40 @@ const Dashboard = () => {
   return (
     <div className='h-full w-full'>
 
-      <NavBar setIsActive={setType} isActive={type} />
+      {/* Navigation bar */}
+      <AnimatedNavbar setIsActive={setType} isActive={type} />
+
 
       {screenSize.width > 700 ?
+        // Hero Swiper for desktop
         (isLoading ?
-          <HeroCarouselFallback />
+          <div className='h-[35rem] flex justify-center items-center'>
+            <BarLoader height={'h-[6rem]'} />
+          </div>
           :
-          <SwipeCarousel type={type} data={trendingMovies} />
+          <AnimatedHeroSwiper type={type} data={trendingMovies} />
         )
         :
+        // Hero Swiper for mobile
         (isLoading ?
-          <HeroSectionFallback />
+          <div className='h-screen flex justify-center items-center'>
+            <BarLoader height={'h-[5rem]'} />
+          </div>
           :
-          <HeroSection type={type} data={trendingMovies} />
+          <MobileHeroSwiper type={type} data={trendingMovies} />
         )
       }
 
       {screenSize.width > 700 ?
+        // dashboard for desktop
         <div className='h-full w-full flex flex-col'>
-          <Categories type={type} />
-          <CardCarousel list={'popular'} type={type} />
+          <AnimatedCategoriesButton type={type} />
+          <AnimatedCardCarousel list={'popular'} type={type} />
         </div>
         :
+        // dashboard for mobile
         <div>
-          <CategoriesNew type={type} />
+          <MobileCategories type={type} />
           <MobileCardCarousel type={type} />
         </div>
       }

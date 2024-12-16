@@ -1,15 +1,6 @@
-import MovieByGenre from './Movies/MovieByGenre'
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-// import required modules
-import { Pagination, Navigation } from 'swiper/modules';
-import useScreenSize from '../features/useScreenSize'
 import { Link } from 'react-router-dom';
 
-const Categories = ({ type, slidesPerView, spaceBetween }) => {
+const MobileCatgories = ({ type, slidesPerView, spaceBetween }) => {
 
     const categories = [
         { title: 'action', genre: type === 'movie' ? 28 : 10759 },
@@ -37,4 +28,4 @@ const Categories = ({ type, slidesPerView, spaceBetween }) => {
     )
 }
 
-export default Categories
+export default MobileCatgories

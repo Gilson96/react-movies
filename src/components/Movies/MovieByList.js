@@ -72,6 +72,3 @@ const MovieByList = ({ slidesPerView, spaceBetween, list, type, handleGenre }) =
 
 export default MovieByList
 
-// style={{
-//     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}')`
-// }}

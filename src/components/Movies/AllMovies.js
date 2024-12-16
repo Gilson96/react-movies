@@ -7,18 +7,21 @@ import { SkeletonText, Box } from '@chakra-ui/react'
 import AnimatedButton from '../AnimatedUI/AnimatedButton'
 
 const AllMovies = () => {
+    // get data from link
     let { state } = useLocation()
     const [mouseHover, setMouseHover] = useState()
     const screenSize = useScreenSize()
+    // destruct data from link
     let genreName = state[0].genreName
     let type = state[0].type
     let genre = state[0].genre
+    // get data from API
     const { data: movieByGenre = [], isLoading } = useGetMovieByGenreQuery({ genre: genre, type: type })
 
-    console.log(state[0].genreName)
     return (
         <div>
             {isLoading ?
+            // Fallback
                 <div className='h-screen w-full p-[3%]'>
                     <div className='w-full flex justify-between items-center'>
                         <SkeletonText mt='4' noOfLines={2} spacing='4' skeletonHeight='2' width={'10%'} paddingBottom={'3%'} />

@@ -1,26 +1,25 @@
 import React from 'react'
-import MovieDetailsList from './MovieDetailsList'
-import { Divider } from '@chakra-ui/react'
-import AddMoviesToAccount from './AddMoviesToAccount'
+import AddMoviesToAccount from '../Movies/AddMoviesToAccount'
 import {
-    usePostToFavouriteMoviesMutation, usePostToWatchlistMoviesMutation
+    usePostToFavouriteMoviesMutation,
+    usePostToWatchlistMoviesMutation
 } from '../../features/Account/accountApi'
 import AnimatedButton from '../AnimatedUI/AnimatedButton'
-import MovieActors from './MovieActors'
-import { useLocation, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import useScreenSize from '../../features/useScreenSize'
 import MobileMovieActors from './MobileMovieActors'
-import MovieRecommendations from './MovieRecommendations'
+import MovieRecommendations from '../Movies/MovieRecommendations'
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline'
 
+// Movie details for mobile view
 const MobileMovieDetails = ({ movieDetails, type }) => {
-    const { movieId } = useLocation()
     const [AddToWatchlist] = usePostToWatchlistMoviesMutation()
     const [AddToFavourites] = usePostToFavouriteMoviesMutation()
     const screenSize = useScreenSize()
 
     return (
         <div className='h-full w-full flex flex-col'>
+            {/* Link to go back */}
             <Link to={'/'} className="absolute right-1 top-[0.5rem]">
                 <ArrowLeftCircleIcon className='h-10 w-10 text-white hover:text-neutral-500 ' />
             </Link>
@@ -59,6 +58,7 @@ const MobileMovieDetails = ({ movieDetails, type }) => {
                 {/* Movie overview */}
                 <p className='my-[2%] text-neutral-200 text-lg'>Overview</p>
                 <p className='text-neutral-500 text-justify mb-[3%]'>{movieDetails.overview}</p>
+
                 {/* Add movie to account buttons */}
                 <AddMoviesToAccount
                     movieDetails={movieDetails}
@@ -70,9 +70,10 @@ const MobileMovieDetails = ({ movieDetails, type }) => {
                 {/* Divider */}
                 <hr className='my-[5%] border-neutral-700' />
 
-                {/* More details */}
+                {/* Information title */}
                 <p className='my-[2%] text-neutral-200 text-lg'>Information</p>
 
+                {/* Information wrapper */}
                 <div className='flex w-full justify-start gap-4'>
                     {/* Left Column */}
                     <div className='flex flex-col gap-2'>
@@ -140,9 +141,7 @@ const MobileMovieDetails = ({ movieDetails, type }) => {
                     slidesPerView={1.5}
                     spaceBetween={30}
                 />
-
             </div>
-
         </div>
     )
 }

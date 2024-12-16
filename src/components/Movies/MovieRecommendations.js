@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useGetMovieRecommendationsQuery } from '../../features/Movies/allMoviesApi'
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import AnimatedButton from '../AnimatedUI/AnimatedButton';
 // Import Swiper styles
@@ -104,9 +104,7 @@ const MovieRecommendations = ({ movieId, slidesPerView, type, spaceBetween }) =>
                                     </SwiperSlide >
                                 </>
                             ))}
-
                         </Swiper>
-
                     </div>
                     :
                     <p className='font-bold text-neutral-400'>Not Available</p>

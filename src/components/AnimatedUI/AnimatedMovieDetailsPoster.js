@@ -9,8 +9,6 @@ const AnimatedPoster = ({ movieDetails }) => {
     const [addToFavourite] = usePostToFavouriteMoviesMutation()
     const [addToWatchlist] = usePostToWatchlistMoviesMutation()
 
-    console.log(movieDetails)
-
     return (
         <div className="w-full h-full rounded-lg transition-all duration-500 flex justify-between items-start">
             {/* movie poster */}
@@ -50,7 +48,7 @@ const AnimatedPoster = ({ movieDetails }) => {
 
                 {/* Movie Overview */}
                 <div
-                    className="w-full mt-[10%] px-[2%] animate__animated animate__fadeInDown"
+                    className="w-full  px-[2%] animate__animated animate__fadeInDown"
                     id="movieDetailsOverviewAnimation"
                 >
                     <p className="text-xl text-neutral-500">Overview:</p>

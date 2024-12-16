@@ -6,6 +6,7 @@ import 'swiper/css/navigation';
 import { Box, SkeletonCircle, Avatar } from '@chakra-ui/react'
 import { useGetMovieActorsQuery } from '../../features/Movies/allMoviesApi'
 
+// Actors compenent for mobile view
 const MobileMovieActors = ({ movieId, type }) => {
     const { data: movieActors = [], isLoading } = useGetMovieActorsQuery({ id: parseInt(movieId), type: type })
 
