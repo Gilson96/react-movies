@@ -40,12 +40,9 @@ List the ready features here:
 ## Screenshots
 ![Example screenshot](https://github.com/Gilson96/react-movies/blob/master/src/assets/project_top.png)
 ![Example screenshot](https://github.com/Gilson96/react-movies/blob/master/src/assets/project_search.png)
-![Example screenshot](https://github.com/Gilson96/react-movies/blob/master/src/assets/project_genres.png)
-![Example screenshot](https://github.com/Gilson96/react-movies/blob/master/src/assets/project_section.png)
+![Example screenshot](https://github.com/Gilson96/react-movies/blob/master/src/assets/project_movieSection.png)
 ![Example screenshot](https://github.com/Gilson96/react-movies/blob/master/src/assets/project_movieDetails.png)
-![Example screenshot](https://github.com/Gilson96/react-movies/blob/master/src/assets/project_recommations.png)
 ![Example screenshot](https://github.com/Gilson96/react-movies/blob/master/src/assets/project_mymovies.png)
-
 
 ## Setup
 1. Create a local directory on your machine
