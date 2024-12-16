@@ -144,7 +144,6 @@ const Post = ({ imgUrl, author, title, description, list, year, movie, type }) =
     const [mouseHover, setMouseHover] = useState()
 
     return (
-
         <div
             className="cursor-pointer transition-transform hover:-translate-y-1 h-full p-[2%] animate__animated animate__fadeInRight"
             style={{

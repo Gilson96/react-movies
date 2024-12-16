@@ -7,6 +7,7 @@ import { useRemoveWatchlistMoviesMutation, useRemoveFavouriteMoviesMutation, use
 import useScreenSize from '../../features/useScreenSize'
 import { SkeletonText, Box } from '@chakra-ui/react'
 import Toggle from '../UI/Toggle';
+import AnimatedButton from '../AnimatedUI/AnimatedButton';
 
 const MyMovies = () => {
     const { data: account, isLoading } = useGetAccountDetailsQuery()
@@ -17,6 +18,7 @@ const MyMovies = () => {
     const [watchlistFeedback, setWatchlistFeedback] = useState()
     const [favouriteFeedback, setFavouriteFeedback] = useState()
     const [isActive, setIsActive] = useState('watchlist')
+    const [mouseHover, setMouseHover] = useState()
 
     console.log(account)
     return (
@@ -29,11 +31,11 @@ const MyMovies = () => {
                     </Link>
                 </div>
 
-                <div className={`flex justify-end gap-1 p-[2%]`}>
+                <div className={`flex w-full justify-between items-center gap-1 my-[2%]`}>
 
                     {/* Advice */}
                     <div className={`w-full ${screenSize.width > 700 && 'mt-[2%]'}`}>
-                        <p className={`italic text-slate-400 ${screenSize.width < 700 && 'text-xs'}`}>(refresh to see movie if added)</p>
+                        <p className={`italic text-slate-400 ${screenSize.width < 700 && 'text-[0.5rem]'}`}>(refresh to see movie if added)</p>
                     </div>
 
                     {/* Watchlist and favourites toggle */}
@@ -50,7 +52,7 @@ const MyMovies = () => {
                     :
                     <>
                         {isActive === 'watchlist' &&
-                            <div className={`flex flex-wrap w-full h-full gap-[1rem] ${screenSize.width < 700 ? 'justify-center mt-[3%]' : ''}`}>
+                            <div className={`flex flex-wrap w-full h-full gap-[1rem] ${screenSize.width < 700 ? ' mt-[3%]' : ''}`}>
                                 {account.map(account => account.watchlistMovies.map(movie =>
 
                                     <div className='flex flex-col'>
@@ -68,14 +70,30 @@ const MyMovies = () => {
                                         <div className={`w-full h-full flex items-start`}>
                                             <Link to={`/movies/${movie.movieDetails.id}`} state={state = (movie.movieDetails.runtime ? 'movie' : 'tv')}>
                                                 <div
-                                                    style={{
-                                                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.movieDetails.backdrop_path}')`
-                                                    }}
-                                                    className={`${screenSize.width < 700 ? 'h-[10rem] w-[7rem]' : 'h-[15rem] w-[12rem]'}  gap-1 rounded-lg bg-no-repeat bg-cover bg-center`}
+                                                    onMouseOver={() => setMouseHover(movie.id)}
+                                                    onMouseLeave={() => setMouseHover(false)}
+                                                    className={`flex flex-col ${screenSize.width < 700 ? 'h-[9rem] w-[5rem]' : 'h-[18rem] w-[12rem]'}  items-start justify-end gap-1 rounded-lg bg-[url(https://image.tmdb.org/t/p/w1280/${movie.movieDetails.poster_path})]  bg-center bg-no-repeat bg-cover`}
                                                 >
-                                                    <div className='h-full w-full flex flex-col items-start hover:bg-[rgb(0,0,0,0.5)] justify-end rounded-lg p-[3%]'>
-                                                        <p className={`${screenSize.width < 700 && 'text-xs'} text-white font-bold`}>{movie.movieDetails.title || movie.movieDetails.name}</p>
-                                                    </div>
+                                                    {mouseHover === movie.id &&
+                                                        <div
+                                                            style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))` }}
+                                                            className='h-full w-full flex flex-col justify-center items-center gap-2'
+                                                        >
+                                                            <p className={`text-white w-full text-center ${screenSize.width < 700 ? 'text-sm' : 'text-xl'} font-bold`}>{movie.movieDetails.title || movie.movieDetails.name}</p>
+
+                                                            <div className="w-full flex justify-center items-center p-[2%] ">
+                                                                <AnimatedButton genreName={'More Details'} specialStyle={{
+                                                                    backgroundColor: '#e5e5e5',
+                                                                    color: '#262626',
+                                                                    fontSize: 0.7 + 'rem',
+                                                                    paddingTop: 0.8 + 'rem',
+                                                                    paddingBottom: 0.8 + 'rem',
+                                                                    width: 8 + 'rem'
+
+                                                                }} />
+                                                            </div>
+                                                        </div>
+                                                    }
                                                 </div>
                                             </Link>
                                             <Tooltip label='Remove'>
@@ -94,8 +112,9 @@ const MyMovies = () => {
                         }
 
 
+                        {/* Favourites Movies */}
                         {isActive === 'favourite' &&
-                            <div className={`flex flex-wrap w-full h-full gap-[1rem] ${screenSize.width < 700 ? 'justify-center mt-[3%]' : 'justify-start'}`}>
+                            <div className={`flex flex-wrap w-full h-full gap-[1rem] ${screenSize.width < 700 ? ' mt-[3%]' : 'justify-start'}`}>
                                 {account.map(account => account.favouriteMovies.map(movie =>
 
                                     <div className='flex flex-col'>
@@ -110,16 +129,31 @@ const MyMovies = () => {
                                         }
                                         <div className={`w-full h-full flex items-start`}>
                                             <Link to={`/movies/${movie.movieDetails.id}`} state={state = (movie.movieDetails.runtime ? 'movie' : 'tv')}>
-                                                <div
-                                                    style={{
-                                                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('https://image.tmdb.org/t/p/w1280/${movie.movieDetails.backdrop_path}')`
-                                                    }}
-                                                    className={`${screenSize.width < 700 ? 'h-[10rem] w-[7rem]' : 'h-[15rem] w-[12rem]'}  gap-1 rounded-lg bg-no-repeat bg-cover bg-center`}
+                                            <div
+                                                    onMouseOver={() => setMouseHover(movie.id)}
+                                                    onMouseLeave={() => setMouseHover(false)}
+                                                    className={`flex flex-col ${screenSize.width < 700 ? 'h-[9rem] w-[5.5rem]' : 'h-[18rem] w-[12rem]'}  items-start justify-end gap-1 rounded-lg bg-[url(https://image.tmdb.org/t/p/w1280/${movie.movieDetails.poster_path})]  bg-center bg-no-repeat bg-cover`}
                                                 >
-                                                    <div className='h-full w-full flex flex-col items-start hover:bg-[rgb(0,0,0,0.5)] justify-end rounded-lg p-[3%]'>
-                                                        <p className={`${screenSize.width < 700 && 'text-xs'} text-white font-bold`}>{movie.movieDetails.title || movie.movieDetails.name}</p>
+                                                    {mouseHover === movie.id &&
+                                                        <div
+                                                            style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))` }}
+                                                            className='h-full w-full flex flex-col justify-center items-center gap-2'
+                                                        >
+                                                            <p className={`text-white w-full text-center ${screenSize.width < 700 ? 'text-sm' : 'text-xl'} font-bold`}>{movie.movieDetails.title || movie.movieDetails.name}</p>
 
-                                                    </div>
+                                                            <div className="w-full flex justify-center items-center p-[2%] ">
+                                                                <AnimatedButton genreName={'More Details'} specialStyle={{
+                                                                    backgroundColor: '#e5e5e5',
+                                                                    color: '#262626',
+                                                                    fontSize: 0.7 + 'rem',
+                                                                    paddingTop: 0.8 + 'rem',
+                                                                    paddingBottom: 0.8 + 'rem',
+                                                                    width: 8 + 'rem'
+
+                                                                }} />
+                                                            </div>
+                                                        </div>
+                                                    }
                                                 </div>
                                             </Link>
                                             <XMarkIcon
