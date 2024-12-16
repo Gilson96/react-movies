@@ -4,6 +4,7 @@ import { useState } from "react";
 
 // Animated Drop down menu
 const AnimatedDropDown = ({ setIsActive, isActive, type }) => {
+    console.log(type)
     const [open, setOpen] = useState(false);
 
     return (
@@ -26,7 +27,7 @@ const AnimatedDropDown = ({ setIsActive, isActive, type }) => {
                     className="flex flex-col gap-2 p-2 rounded-lg bg-white shadow-xl absolute top-[120%] left-[50%] w-[100%] overflow-hidden"
                 >
                     <Option setOpen={setOpen} setIsActive={setIsActive} text="popular" />
-                    <Option setOpen={setOpen} setIsActive={setIsActive} text="upcoming" />
+                    <Option setOpen={setOpen} setIsActive={setIsActive} text={type === 'movie' ? 'upcoming' : 'on_the_air'} />
                     <Option setOpen={setOpen} setIsActive={setIsActive} text="top_rated" />
                 </motion.ul>
             </motion.div>

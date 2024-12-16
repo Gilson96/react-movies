@@ -1,9 +1,6 @@
 import React from 'react'
 
 const MovieDetailsList = ({ movieDetails, type }) => {
-    console.log(type)
-    console.log(movieDetails)
-
 
     return (
         <div className='w-full h-full flex flex-col justify-between itmes-center px-[2%] py-[6%] gap-6'>
@@ -26,8 +23,8 @@ const MovieDetailsList = ({ movieDetails, type }) => {
                     <div className='flex flex-col gap-1'>
                         {/* Runtime */}
                         <div className='flex items-center gap-1'>
-                            <h1 className='text-base text-neutral-500'>Runtime:</h1>
-                            <p className='text-neutral-300 text-base font-light'>{movieDetails.runtime > 0 ? movieDetails.runtime + 'min' : 'Not Available'}</p>
+                            <h1 className='text-base text-neutral-500'>{type === 'movie' ? 'Runtime:' : 'Seasons:'}</h1>
+                            <p className='text-neutral-300 text-base font-light'>{type === 'movie' ? movieDetails.runtime > 0 ? movieDetails.runtime + 'min' : 'Not Available' : movieDetails.seasons.length}</p>
                         </div>
                         {/* Year */}
                         <div className='flex items-center gap-1'>

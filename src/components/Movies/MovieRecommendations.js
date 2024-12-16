@@ -10,7 +10,7 @@ import { StarIcon } from '@heroicons/react/24/solid'
 import useScreenSize from '../../features/useScreenSize';
 import { RxHand } from "react-icons/rx";
 
-const MovieRecommendations = ({ movieId, slidesPerView, modules, spaceBetween, id, type, genres }) => {
+const MovieRecommendations = ({ movieId, slidesPerView, type, spaceBetween }) => {
     const [mouseHover, setMouseHover] = useState()
     let { movie_id } = useParams();
     let { state } = useLocation();
@@ -19,12 +19,14 @@ const MovieRecommendations = ({ movieId, slidesPerView, modules, spaceBetween, i
     console.log(movieRecommendations)
 
     return (
-        <div className='w-full h-full relative -top-[50rem] p-[2%] '>
+        <div className={`w-full h-full ${screenSize.width < 700 ? '' : 'relative -top-[50rem]'} p-[2%] `}>
+
             {/* Title */}
-            <div className='flex flex-col w-full'>
+            <div className={`${screenSize.width < 700 ? 'hidden' : 'flex flex-col w-full'}`}>
                 <h1 className='text-xl text-neutral-500'>Recommendations:</h1>
                 <hr className='border-neutral-700 w-full h-[px] pb-[2%]' />
             </div>
+
             {/* Fallback */}
             {isLoading ?
                 <div className='flex gap-4'>
@@ -40,15 +42,18 @@ const MovieRecommendations = ({ movieId, slidesPerView, modules, spaceBetween, i
                 // if movie has movies recommendations show 5 of them
                 movieRecommendations.results.length !== 0 ?
                     <div className='w-full h-full'>
-                        <div className='w-full flex justify-center items-end gap-2'>
-                            {/* Sign to advise` */}
+
+                        {/* Sign to advise` */}
+                        <div className={`${screenSize.width < 700 ? 'hidden' : 'w-full flex justify-center items-end gap-2'} `}>
                             <RxHand className='text-xs -rotate-45 -scale-x-100' />
                             <p className='italic text-xs'>drag</p>
                             <RxHand className='text-xs rotate-45' />
                         </div>
+
                         {/* 5 movies recommendations */}
                         <Swiper
-                            slidesPerView={2}
+                            slidesPerView={slidesPerView}
+                            spaceBetween={spaceBetween}
                             className="h-full w-full flex"
                             grabCursor={true}
                         >

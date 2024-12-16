@@ -52,13 +52,15 @@ const MovieByList = ({ slidesPerView, spaceBetween, list, type, handleGenre }) =
                             <SwiperSlide
                                 key={index}
                             >
-                                <div className='flex flex-col gap-1 rounded-lg'>
-                                    <div className={`h-[15rem] w-[10rem] rounded-xl bg-[url(https://image.tmdb.org/t/p/w1280/${movie.poster_path})] bg-center bg-no-repeat bg-cover`}>
+                                <Link to={`/movies/${movie.id}`} state={type} >
+                                    <div className='flex flex-col gap-1 rounded-lg'>
+                                        <div className={`h-[15rem] w-[10rem] rounded-xl bg-[url(https://image.tmdb.org/t/p/w1280/${movie.poster_path})] bg-center bg-no-repeat bg-cover`}>
+                                        </div>
+                                        <p className='text-white text-sm w-[80%] text-center'>
+                                            {movie.title || movie.name}
+                                        </p>
                                     </div>
-                                    <p className='text-white text-sm w-[80%] text-center'>
-                                        {movie.title || movie.name}
-                                    </p>
-                                </div>
+                                </Link>
                             </SwiperSlide>
                         </>
                     ))

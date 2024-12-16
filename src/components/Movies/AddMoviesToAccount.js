@@ -96,6 +96,7 @@ const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, movieDetails }) =>
                             justifyContent: 'justify-center',
                             alignItems: 'center',
                             borderRadius: 0,
+                            color: '#ffffff'
                         }}
                         genreName={'Add to Watchlist'}
                     />
@@ -103,7 +104,7 @@ const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, movieDetails }) =>
             </div>
 
             <div
-                className={`h-[57px] border w-1/2 border-neutral-700 bg-neutral-800 flex justify-center items-center`}
+                className={`h-[57px] border w-1/2 text-wh border-neutral-700 bg-neutral-800 flex justify-center items-center`}
                 onClick={() => {
                     return !handleIfMovieExistInFavourites().includes('exist') &&
                         <>
@@ -138,7 +139,8 @@ const AddMoviesToAccount = ({ addToWatchlist, addToFavourite, movieDetails }) =>
                             display: 'flex',
                             justifyContent: 'justify-center',
                             alignItems: 'center',
-                            borderRadius: 0
+                            borderRadius: 0,
+                            color: '#ffffff'
                         }}
                         genreName={'Add to Favourites'}
                     />

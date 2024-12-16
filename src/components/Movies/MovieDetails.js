@@ -10,6 +10,7 @@ import {
 import useScreenSize from '../../features/useScreenSize'
 import MovieDetailsHero from './MovieDetailsHero';
 import MovieDetailsHeroFallback from '../Fallback/MovieDetailsHeroFallback';
+import MobileMovieDetails from './MobileMovieDetails';
 
 const MovieDetails = () => {
   let { movieId } = useParams();
@@ -18,16 +19,27 @@ const MovieDetails = () => {
   const { data: movieDetails = [], isLoading } = useGetMovieDetailsQuery({ id: newMovieId, type: state })
   const screenSize = useScreenSize()
 
-
   return (
     <div className='flex flex-col h-full w-full'>
       <>
-        {/* Movie Details hero */}
-        {isLoading ?
-          <MovieDetailsHeroFallback />
+        {screenSize.width > 700 ?
+          // Movie Details for desktop
+          (isLoading ?
+            <MovieDetailsHeroFallback />
+            :
+            <MovieDetailsHero movieDetails={movieDetails} type={state} />
+          )
           :
-          <MovieDetailsHero movieDetails={movieDetails} type={state} />
+          // Movie Details for mobile
+          (isLoading ?
+            <p>isLoading</p>
+            :
+            <MobileMovieDetails movieDetails={movieDetails} type={state} />
+          )
         }
+
+
+      
       </>
     </div >
   )

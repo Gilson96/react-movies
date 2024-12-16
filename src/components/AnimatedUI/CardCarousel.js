@@ -64,7 +64,7 @@ const CardCarousel = ({ type }) => {
                             <div className={`${screenSize.width > 700 ?  'h-full w-full justify-end items-center flex gap-12' : 'w-full flex justify-between pl-[2%]'}`}>
 
                                 {/* drop down menu (ex. popular, upcoming movies...)  */}
-                                <AnimatedDropDown setIsActive={setIsActive} isActive={isActive} />
+                                <AnimatedDropDown setIsActive={setIsActive} isActive={isActive} type={type} />
 
                                 {/* carousel arrows */}
                                 <div>

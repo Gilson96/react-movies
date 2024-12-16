@@ -1,7 +1,4 @@
-import {
-    motion,
-    MotionConfig,
-} from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
 import { useState } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { twMerge } from "tailwind-merge";
@@ -54,7 +51,7 @@ const Right = ({ movieDetails, type }) => {
         {
             content: (
                 <>
-                    <MovieRecommendations type={type} movieId={movieDetails.id} genres={movieDetails.genres}/>
+                    <MovieRecommendations type={type} movieId={movieDetails.id} genres={movieDetails.genres} />
                 </>
             ),
         },
@@ -62,9 +59,9 @@ const Right = ({ movieDetails, type }) => {
     ];
     return (
         <div className="w-[40%] flex flex-col overflow-hidden h-full">
-                <Link to={'/'} className="relative left-[31rem] top-[0.5rem]">
-                    <ArrowLeftCircleIcon className='h-10 w-10 text-white hover:text-neutral-500 ' />
-                </Link>
+            <Link to={'/'} className="relative left-[31rem] top-[0.5rem]">
+                <ArrowLeftCircleIcon className='h-10 w-10 text-white hover:text-neutral-500 ' />
+            </Link>
             <div className='w-full h-full flex flex-col overflow-hidden'>
                 {CONTENT.map((c, itemIdx) => {
                     return (
