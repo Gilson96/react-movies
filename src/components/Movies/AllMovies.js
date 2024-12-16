@@ -51,12 +51,12 @@ const AllMovies = () => {
                     </div>
 
                     {/* All movies */}
-                    <div className={`w-full h-full flex flex-wrap items-center px-[3%] gap-3`}>
+                    <div className={`w-full h-full ${screenSize.width > 700 ? 'flex flex-wrap items-center' : 'flex flex-wrap justify-center items-center'}  px-[3%] gap-3`}>
                         {movieByGenre.results.filter(movie => movie.backdrop_path !== null).map(movie =>
                             <div
                                 onMouseOver={() => setMouseHover(movie.id)}
                                 onMouseLeave={() => setMouseHover(false)}
-                                className={`flex flex-col ${screenSize.width > 700 ? 'h-[25rem] w-[15rem]' : 'h-[15rem] w-[9rem]'} items-start justify-end gap-1 rounded-lg bg-[url(https://image.tmdb.org/t/p/w1280/${movie.poster_path})]  bg-center bg-no-repeat bg-cover`}
+                                className={`flex flex-col ${screenSize.width > 700 ? 'h-[25rem] w-[15rem]' : 'h-[15rem] w-[10rem]'} items-start justify-end gap-1 rounded-lg bg-[url(https://image.tmdb.org/t/p/w1280/${movie.poster_path})]  bg-center bg-no-repeat bg-cover`}
                             >
                                 {mouseHover === movie.id &&
                                     <div
